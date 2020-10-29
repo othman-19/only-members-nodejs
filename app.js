@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -10,6 +11,15 @@ const usersRouter = require('./routes/users');
 require('dotenv').config();
 
 const app = express();
+
+mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(() => {
+    console.log('MongoDB Connected');
+    console.log(`app listening on port ${process.env.PORT}!`);
+  })
+  .catch(err => {
+    console.error(err);
+  });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
