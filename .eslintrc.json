@@ -12,5 +12,7 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "no-shadow": "off",
+        "arrow-parens": ["error", "as-needed"]
     }
 }
