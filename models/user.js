@@ -33,12 +33,18 @@ const UserSchema = new Schema(
       required: true,
     },
     membership: {
+      status: {
+        type: Boolean,
+        default: false,
+      },
       pass: String,
-      status: Boolean,
     },
     admin: {
+      status: {
+        type: Boolean,
+        default: false,
+      },
       pass: String,
-      status: Boolean,
     },
   },
   { timestamps: true },
