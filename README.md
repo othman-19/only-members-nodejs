@@ -8,7 +8,7 @@ I will use my authentication skills learned, and also I will be practicing my da
 
 [Live Demo Link]() .
 
-![Design of the app models]()
+![Design of the app models](members_only.png)
 
 
 ## Built With
