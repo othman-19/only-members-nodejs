@@ -14,6 +14,7 @@
     "rules": {
         "no-shadow": "off",
         "arrow-parens": ["error", "as-needed"],
-        "no-unused-vars": ["error", { "vars": "all", "args": "none"}]
+        "no-unused-vars": ["error", { "vars": "all", "args": "none"}],
+        "no-underscore-dangle" : "off"
     }
 }
