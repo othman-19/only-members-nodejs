@@ -1,27 +1,29 @@
 const UserRouter = require('express').UserRouter();
 
+const userController = require('../controllers/userController');
+
 // GET request for creating a user. NOTE This must come before routes that display user.
-UserRouter.get('/user/create', user_controller.user_new);
+UserRouter.get('/user/create', userController.new);
 
 // POST request for creating user.
-UserRouter.post('/user/create', user_controller.user_create);
+UserRouter.post('/user/create', userController.create);
 
 // GET request to delete user.
-UserRouter.get('/user/:id/delete', user_controller.user_delete_get);
+UserRouter.get('/user/:id/delete', userController.delete_get);
 
 // POST request to delete user.
-UserRouter.post('/user/:id/delete', user_controller.user_delete);
+UserRouter.post('/user/:id/delete', userController.delete);
 
 // GET request to update user.
-UserRouter.get('/user/:id/update', user_controller.user_edit);
+UserRouter.get('/user/:id/update', userController.edit);
 
 // POST request to update user.
-UserRouter.post('/user/:id/update', user_controller.user_update);
+UserRouter.post('/user/:id/update', userController.update);
 
 // GET request for one user.
-UserRouter.get('/user/:id', user_controller.user_show);
+UserRouter.get('/user/:id', userController.show);
 
 // GET request for list of all users.
-UserRouter.get('/users', user_controller.user_index);
+UserRouter.get('/users', userController.index);
 
 module.exports = UserRouter;
