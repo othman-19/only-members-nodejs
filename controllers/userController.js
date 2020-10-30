@@ -1,5 +1,5 @@
 const async = require('async');
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const Post = require('../models/post');
 
@@ -54,3 +54,36 @@ exports.show = (req, res, next) => {
 exports.new = (req, res, next) => {
   res.render('user/form', { title: 'Create New User' });
 };
+
+exports.validations = [
+  check('user_name', 'Username Must Be an Email Address')
+    .trim()
+    .notEmpty()
+    .escape(),
+
+  check('first_name', 'First name required')
+    .trim()
+    .notEmpty()
+    .escape(),
+
+  check('last_name', 'Last name required')
+    .trim()
+    .notEmpty()
+    .escape(),
+
+  check('email', 'Valid email is required')
+    .isEmail()
+    .trim()
+    .escape()
+    .normalizeEmail(),
+
+  check('password')
+    .isLength({ min: 8 })
+    .withMessage('Password Must Be at Least 8 Characters')
+    .matches('[0-9]')
+    .withMessage('Password Must Contain a Number')
+    .matches('[A-Z]')
+    .withMessage('Password Must Contain an Uppercase Letter')
+    .trim()
+    .escape(),
+];
