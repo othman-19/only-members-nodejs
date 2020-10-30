@@ -7,6 +7,14 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema(
   {
+    user_name: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "can't be blank"],
+      match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      maxlength: 100,
+    },
     first_name: {
       type: String,
       lowercase: true,
@@ -62,7 +70,7 @@ UserSchema.virtual('url').get(function () {
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
-UserSchema.methods.generateJWT = function() {
+UserSchema.methods.generateJWT = function () {
   const today = new Date();
   const exp = new Date(today);
   exp.setDate(today.getDate() + 60);
@@ -73,4 +81,12 @@ UserSchema.methods.generateJWT = function() {
   }, secret);
 };
 
-module.exports = mongoose.model('Author', UserSchema);
+UserSchema.methods.toAuthJSON = function () {
+  return {
+    username: this.username,
+    email: this.email,
+    token: this.generateJWT(),
+  };
+};
+
+module.exports = mongoose.model('User', UserSchema);
