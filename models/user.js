@@ -70,6 +70,13 @@ UserSchema.virtual('url').get(function () {
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
+UserSchema.methods.isAdmin = function () {
+  return this.admin.status;
+};
+
+UserSchema.methods.isMember = function () {
+  return this.membership.status;
+};
 UserSchema.methods.generateJWT = function () {
   const today = new Date();
   const exp = new Date(today);
