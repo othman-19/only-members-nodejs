@@ -8,11 +8,8 @@ UserRouter.get('/user/create', userController.new);
 // POST request for creating user.
 UserRouter.post('/user/create', userController.create);
 
-// GET request to delete user.
-UserRouter.get('/user/:id/delete', userController.delete_get);
-
-// POST request to delete user.
-UserRouter.post('/user/:id/delete', userController.delete);
+// DELETE request to delete user.
+UserRouter.delete('/user/:id', userController.delete);
 
 // GET request to update user.
 UserRouter.get('/user/:id/update', userController.edit);
