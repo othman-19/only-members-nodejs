@@ -1,4 +1,5 @@
 const async = require('async');
+const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const Post = require('../models/post');
