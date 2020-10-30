@@ -132,3 +132,13 @@ exports.create = (req, res, next) => {
     });
   }
 };
+
+exports.delete = (req, res, next) => {
+  User.findByIdAndRemove(req.params.id, err => {
+    if (err) {
+      return next(err);
+    }
+    // User deleted. Redirect to index page.
+    return res.redirect('/');
+  });
+};
