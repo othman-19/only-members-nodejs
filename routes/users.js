@@ -3,24 +3,24 @@ const UserRouter = require('express').UserRouter();
 const userController = require('../controllers/userController');
 
 // GET request for creating a record. NOTE This must come before routes that display user.
-UserRouter.get('/user/create', userController.new);
+UserRouter.get('/create', userController.new);
 
 // POST request for creating record.
-UserRouter.post('/user/create', userController.create);
+UserRouter.post('/create', userController.validations, userController.create);
 
 // DELETE request to delete record.
-UserRouter.delete('/user/:id', userController.delete);
+UserRouter.delete('/:id', userController.delete);
 
 // GET request to update record.
-UserRouter.get('/user/:id/update', userController.edit);
+UserRouter.get('/:id/update', userController.edit);
 
 // POST request to update record.
-UserRouter.post('/user/:id/update', userController.update);
+UserRouter.post('/:id/update', userController.validations, userController.update);
 
 // GET request for one record.
-UserRouter.get('/user/:id', userController.show);
+UserRouter.get('/:id', userController.show);
 
 // GET request for list of all records.
-UserRouter.get('/users', userController.index);
+UserRouter.get('/', userController.index);
 
 module.exports = UserRouter;
