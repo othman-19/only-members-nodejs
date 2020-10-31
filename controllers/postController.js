@@ -36,3 +36,6 @@ exports.show = (req, res, next) => {
     .populate('author')
     .exec();
 };
+
+// Display post create form on GET.
+exports.new = (req, res, next) => res.render('post/form', { title: 'Create New Post' });
