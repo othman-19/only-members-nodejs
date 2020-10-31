@@ -6,7 +6,7 @@ const Post = require('../models/post');
 
 // Display list of all users.
 exports.index = (req, res, next) => {
-  User.find({}, 'full_name')
+  User.find({}, 'user_name full_name')
     .exec((err, userList) => {
       if (err) {
         return next(err);
