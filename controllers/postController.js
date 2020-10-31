@@ -15,7 +15,7 @@ exports.index = (req, res, next) => {
     });
 };
 
-// Display detail page for a specific post.
+// Display detail page for a specific record.
 exports.show = (req, res, next) => {
   Post.findById(req.params.id, (err, post) => {
     if (err) {
@@ -37,7 +37,7 @@ exports.show = (req, res, next) => {
     .exec();
 };
 
-// Display post create form on GET.
+// Display record create form on GET.
 exports.new = (req, res, next) => res.render('post/form', { title: 'Create New Post' });
 
 // Validate and sanitize fields.
@@ -53,4 +53,31 @@ exports.validations = [
     .escape(),
 ];
 
+// eslint-disable-next-line consistent-return
+exports.create = (req, res, next) => {
+  // Extract the validation errors from a request.
+  const errors = validationResult(req);
 
+  // Create a record object with escaped and trimmed data.
+  const post = new Post({
+    title: req.body.title,
+    text: req.body.text,
+  });
+
+  if (!errors.isEmpty()) {
+    // There are errors. Render form again with sanitized values/error messages.
+    return res.render('post/form', {
+      title: 'Create Post',
+      post,
+      errors: errors.array(),
+    });
+  }
+  // Data from form is valid. Save record.
+  post.save(err => {
+    if (err) {
+      return next(err);
+    }
+    // successful - redirect to new record url.
+    return res.redirect(post.url);
+  });
+};

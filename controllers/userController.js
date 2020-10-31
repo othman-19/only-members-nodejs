@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const Post = require('../models/post');
 
-// Display list of all users.
+// Display list of all records.
 exports.index = (req, res, next) => {
   User.find({}, 'user_name full_name')
     .exec((err, users) => {
@@ -19,7 +19,7 @@ exports.index = (req, res, next) => {
     });
 };
 
-// Display detail page for a specific user.
+// Display detail page for a specific record.
 exports.show = (req, res, next) => {
   async.parallel(
     {
@@ -51,7 +51,7 @@ exports.show = (req, res, next) => {
   );
 };
 
-// Display user new form.
+// Display record new form.
 exports.new = (req, res, next) => res.render('user/form', { title: 'Create New User' });
 
 exports.validations = [
@@ -91,7 +91,7 @@ exports.create = (req, res, next) => {
   // Extract the validation errors from a request.
   const errors = validationResult(req);
 
-  // Create a user object with validated data.
+  // Create a record object with validated data.
   let user = new User({
     user_name: req.body.user_name,
     first_name: req.body.first_name,
@@ -124,7 +124,7 @@ exports.create = (req, res, next) => {
         if (err) {
           return next(err);
         }
-        // User saved. Redirect to user detail page.
+        // record saved. Redirect to record url.
         return res.redirect(user.url);
       });
     });
@@ -136,12 +136,12 @@ exports.delete = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    // User deleted. Redirect to index page.
+    // record deleted. Redirect to index page.
     return res.redirect('/');
   });
 };
 
-// Display User edit form.
+// Display record edit form.
 exports.edit = (req, res, next) => {
   User.findById(req.params.id, (err, user) => {
     if (err) {
@@ -161,7 +161,7 @@ exports.update = (req, res, next) => {
   // Extract the validation errors from a request.
   const errors = validationResult(req);
 
-  // Create a user object with escaped and trimmed data.
+  // Create a record object with escaped and trimmed data.
   let user = new User({
     user_name: req.body.user_name,
     first_name: req.body.first_name,
@@ -200,7 +200,7 @@ exports.update = (req, res, next) => {
           if (error) {
             return next(error);
           }
-          // Successful - redirect to category detail page.
+          // Successful - redirect to record url.
           return res.redirect(updatedUser.url);
         },
       );
