@@ -95,3 +95,23 @@ exports.delete = (req, res, next) => {
     return res.redirect('/');
   });
 };
+
+exports.edit = (req, res, next) => {
+  // Get record for form.
+  Post.findById(req.params.id, (err, post) => {
+    if (err) {
+      return next(err);
+    }
+    if (post === null) {
+      // No results.
+      const error = new Error('Record not found');
+      error.status = 404;
+      return next(err);
+    }
+    // Success.
+    return res.render('post/form', {
+      title: 'Update Form',
+      post,
+    });
+  }).populate('author').exec();
+};
