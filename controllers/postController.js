@@ -1,4 +1,3 @@
-const async = require('async');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const Post = require('../models/post');
@@ -110,8 +109,42 @@ exports.edit = (req, res, next) => {
     }
     // Success.
     return res.render('post/form', {
-      title: 'Update Form',
+      title: 'Update Post',
       post,
     });
   }).populate('author').exec();
+};
+
+exports.update = (req, res, next) => {
+  // Extract the validation errors from a request.
+  const errors = validationResult(req);
+
+  // Create a record object with escaped and trimmed data.
+  const post = new Post({
+    title: req.body.title,
+    text: req.body.text,
+    _id: req.params.id,
+  });
+
+  if (!errors.isEmpty()) {
+    // There are errors. Render the form again with sanitized values/error messages.
+    res.render('post/form', {
+      title: 'Update Post',
+      post,
+      errors: errors.array(),
+    });
+  } else {
+    Post.findByIdAndUpdate(
+      req.params.id,
+      post,
+      {},
+      (error, updatedPost) => {
+        if (error) {
+          return next(error);
+        }
+        // Successful - redirect to record url.
+        return res.redirect(updatedPost.url);
+      },
+    );
+  }
 };
