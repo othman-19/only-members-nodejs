@@ -81,3 +81,13 @@ exports.create = (req, res, next) => {
     return res.redirect(post.url);
   });
 };
+
+exports.delete = (req, res, next) => {
+  Post.findByIdAndRemove(req.params.id, err => {
+    if (err) {
+      return next(err);
+    }
+    // record deleted. Redirect to index page.
+    return res.redirect('/');
+  });
+};
