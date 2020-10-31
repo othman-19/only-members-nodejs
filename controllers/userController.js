@@ -94,7 +94,7 @@ exports.create = (req, res, next) => {
   const errors = validationResult(req);
 
   // Create a user object with validated data.
-  const user = new User({
+  let user = new User({
     user_name: req.body.user_name,
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -116,7 +116,7 @@ exports.create = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      const user = new User({
+      user = new User({
         user_name: req.body.user_name,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -141,4 +141,20 @@ exports.delete = (req, res, next) => {
     // User deleted. Redirect to index page.
     return res.redirect('/');
   });
+};
+
+// Display User edit form.
+exports.edit = (req, res, next) => {
+  User.findById(req.params.id, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (user === null) {
+      return res.redirect('/');
+    }
+    return res.render('user/form', {
+      title: 'Update User',
+      user,
+    });
+  }).exec();
 };
