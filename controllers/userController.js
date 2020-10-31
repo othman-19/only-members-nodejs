@@ -158,3 +158,54 @@ exports.edit = (req, res, next) => {
     });
   }).exec();
 };
+
+exports.update = (req, res, next) => {
+  // Extract the validation errors from a request.
+  const errors = validationResult(req);
+
+  // Create a user object with escaped and trimmed data.
+  let user = new User({
+    user_name: req.body.user_name,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    email: req.body.email,
+    hash: req.body.password,
+  });
+
+  if (!errors.isEmpty()) {
+    // There are errors. Render the form again with sanitized values/error messages.
+    res.render('user/form', {
+      title: 'Update User',
+      user,
+      errors: errors.array(),
+    });
+  } else {
+    // Data from form is valid.
+    // eslint-disable-next-line consistent-return
+    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+      if (err) {
+        return next(err);
+      }
+      user = new User({
+        user_name: req.body.user_name,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        hash: hashedPassword,
+        _id: req.params.id,
+      });
+      User.findByIdAndUpdate(
+        req.params.id,
+        user,
+        {},
+        (error, updatedUser) => {
+          if (error) {
+            return next(error);
+          }
+          // Successful - redirect to category detail page.
+          return res.redirect(updatedUser.url);
+        },
+      );
+    });
+  }
+};
