@@ -6,7 +6,7 @@ const postController = require('../controllers/postController');
 PostRouter.get('/create', postController.new);
 
 // POST request for creating record.
-PostRouter.post('/create', postController.create);
+PostRouter.post('/create', postController.validations, postController.create);
 
 // POST request to delete record.
 PostRouter.post('/:id/delete', postController.delete);
@@ -15,7 +15,7 @@ PostRouter.post('/:id/delete', postController.delete);
 PostRouter.get('/:id/update', postController.edit);
 
 // POST request to update record.
-PostRouter.post('/:id/update', postController.update);
+PostRouter.post('/:id/update', postController.validations, postController.update);
 
 // GET request for one record.
 PostRouter.get('/:id', postController.show);
