@@ -1,5 +1,5 @@
 const async = require('async');
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const Post = require('../models/post');
 
@@ -39,3 +39,18 @@ exports.show = (req, res, next) => {
 
 // Display post create form on GET.
 exports.new = (req, res, next) => res.render('post/form', { title: 'Create New Post' });
+
+// Validate and sanitize fields.
+exports.validations = [
+  check('title', 'Title must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  check('text', 'Text must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+];
+
+
