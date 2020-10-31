@@ -11,6 +11,28 @@ exports.index = (req, res, next) => {
         return next(err);
       }
       // Successful, so render
-      return res.render('posts', { title: 'Posts List', posts });
+      return res.render('post/posts', { title: 'Posts List', posts });
     });
+};
+
+// Display detail page for a specific post.
+exports.show = (req, res, next) => {
+  Post.findById(req.params.id, (err, post) => {
+    if (err) {
+      return next(err);
+    }
+    if (post === null) {
+      // No results.
+      const error = new Error('Post not found');
+      error.status = 404;
+      return next(error);
+    }
+    // Successful, so render.
+    return res.render('post/show', {
+      title: post.title,
+      post,
+    });
+  })
+    .populate('author')
+    .exec();
 };
