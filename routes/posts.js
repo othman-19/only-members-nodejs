@@ -1,4 +1,4 @@
-const PostRouter = require('express').PostRouter();
+const PostRouter = require('express').Router();
 const postController = require('../controllers/postController');
 
 // GET request for creating a record.
