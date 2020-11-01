@@ -85,6 +85,9 @@ exports.validations = [
     .withMessage('Password Must Contain an Uppercase Letter')
     .trim()
     .escape(),
+  check('passwordConfirmation', 'passwordConfirmation field must have the same value as the password field')
+    .exists()
+    .custom((value, { req }) => value === req.body.password),
 ];
 
 exports.create = (req, res, next) => {
@@ -92,13 +95,14 @@ exports.create = (req, res, next) => {
   const errors = validationResult(req);
 
   // Create a record object with validated data.
-  let user = new User({
+  let user = {
     user_name: req.body.user_name,
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
     hash: req.body.password,
-  });
+    passwordConfirmation: req.body.passwordConfirmation,
+  };
 
   if (!errors.isEmpty()) {
     // There are errors. Render the form again with sanitized values/error messages.
@@ -166,13 +170,14 @@ exports.update = (req, res, next) => {
   const errors = validationResult(req);
 
   // Create a record object with escaped and trimmed data.
-  let user = new User({
+  let user = {
     user_name: req.body.user_name,
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
     hash: req.body.password,
-  });
+    passwordConfirmation: req.body.passwordConfirmation,
+  };
 
   if (!errors.isEmpty()) {
     // There are errors. Render the form again with sanitized values/error messages.
