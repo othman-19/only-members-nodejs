@@ -69,14 +69,13 @@ UserSchema.virtual('url').get(function () {
   return `/user/${this._id}`;
 });
 
-UserSchema.pre('findByIdAndRemove', async function (next) {
-  try {
-    await Post.Remove({
-      _id: { $in: this.posts },
-    });
-  } catch (err) {
-    next(err);
-  }
+UserSchema.post('remove', (doc, next) => {
+  Post.Remove({ author: doc._id }, (err, removedPosts) => {
+    if (err) {
+      return next(err);
+    }
+    return next(removedPosts);
+  }).exec();
 });
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
