@@ -1,15 +1,10 @@
 <div class="container">
-  <% // if (message.length > 0) { %>
+  <% if (locals.errors.length > 0) { %>
     <div>
-      <strong>Warning!</strong> <%=// message %>
+      <strong>Warning!</strong> <%= locals.errors %>
     </div>
-  <% // } %>
-  <% if (errors.length > 0) { %>
-      <div>
-        <strong>Warning!</strong> <%= errors %>
-      </div>
-    <% } %>
-  <h2>Please Sign Up</h2>
+  <% } %>
+  <h2>Please Register</h2>
   <form action="/register" method="post">
     <label for="userName">User name</label>
     <input type="text" id="userName" name="userName" placeholder="User Name" required>
