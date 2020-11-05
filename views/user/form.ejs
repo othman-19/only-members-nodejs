@@ -1,11 +1,13 @@
 <div class="container">
-  <% if (locals.errors.length > 0) { %>
-    <div>
-      <strong>Warning!</strong> <%= locals.errors %>
-    </div>
+  <% if (locals.errors) { %>
+    <ul>
+    <% locals.errors.forEach(function(error){ %>
+      <%= error.msg %>
+    <% }); %>
+    </ul>
   <% } %>
   <h2>Please Register</h2>
-  <form action="/register" method="post">
+  <form action="/users/create" method="post">
     <label for="userName">User name</label>
     <input type="text" id="userName" name="userName" placeholder="User Name" required>
 

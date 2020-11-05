@@ -13,7 +13,7 @@ router.get('/login', (req, res, next) => {
 });
 /* GET register form. */
 router.get('/register', (req, res, next) => {
-  res.render('user/form', { title: 'Register' });
+  res.redirect('users/create');
 });
 
 module.exports = router;

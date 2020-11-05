@@ -55,7 +55,7 @@ exports.show = (req, res, next) => {
 exports.new = (req, res, next) => res.render('user/form', { title: 'Create New User' });
 
 exports.validations = [
-  check('user_name', 'Username Must Be an Email Address')
+  check('user_name', 'First name required')
     .trim()
     .notEmpty()
     .escape(),
