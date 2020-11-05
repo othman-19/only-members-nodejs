@@ -1,9 +1,14 @@
 <div class="container">
-  <% if (message.length > 0) { %>
+  <% // if (message.length > 0) { %>
     <div>
-      <strong>Warning!</strong> <%= message %>.
+      <strong>Warning!</strong> <%=// message %>
     </div>
-  <% } %>
+  <% // } %>
+  <% if (errors.length > 0) { %>
+      <div>
+        <strong>Warning!</strong> <%= errors %>
+      </div>
+    <% } %>
   <h2>Please Sign Up</h2>
   <form action="/register" method="post">
     <label for="userName">User name</label>
