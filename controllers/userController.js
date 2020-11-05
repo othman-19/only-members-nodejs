@@ -6,7 +6,7 @@ const Post = require('../models/post');
 
 // Display list of all records.
 exports.index = (req, res, next) => {
-  User.find({}, 'user_name full_name')
+  User.find({}, 'userName fullName')
     .exec((err, users) => {
       if (err) {
         return next(err);
@@ -55,17 +55,17 @@ exports.show = (req, res, next) => {
 exports.new = (req, res, next) => res.render('user/form', { title: 'Create New User' });
 
 exports.validations = [
-  check('user_name', 'Username required')
+  check('userName', 'Username required')
     .trim()
     .notEmpty()
     .escape(),
 
-  check('first_name', 'First name required')
+  check('firstName', 'First name required')
     .trim()
     .notEmpty()
     .escape(),
 
-  check('last_name', 'Last name required')
+  check('lastName', 'Last name required')
     .trim()
     .notEmpty()
     .escape(),
@@ -97,9 +97,9 @@ exports.create = (req, res, next) => {
 
   // Create a record object with validated data.
   let user = {
-    user_name: req.body.user_name,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
+    userName: req.body.userName,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     hash: req.body.password,
     passwordConfirmation: req.body.passwordConfirmation,
@@ -120,9 +120,9 @@ exports.create = (req, res, next) => {
         return next(err);
       }
       user = new User({
-        user_name: req.body.user_name,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        userName: req.body.userName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         hash: hashedPassword,
       }).save(err => {
@@ -172,9 +172,9 @@ exports.update = (req, res, next) => {
 
   // Create a record object with escaped and trimmed data.
   let user = {
-    user_name: req.body.user_name,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
+    userName: req.body.userName,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     hash: req.body.password,
     passwordConfirmation: req.body.passwordConfirmation,
@@ -195,9 +195,9 @@ exports.update = (req, res, next) => {
         return next(err);
       }
       user = new User({
-        user_name: req.body.user_name,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        userName: req.body.userName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         hash: hashedPassword,
         _id: req.params.id,

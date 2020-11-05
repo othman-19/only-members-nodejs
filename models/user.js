@@ -8,7 +8,7 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema(
   {
-    user_name: {
+    userName: {
       type: String,
       lowercase: true,
       unique: true,
@@ -16,14 +16,14 @@ const UserSchema = new Schema(
       match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
       maxlength: 100,
     },
-    first_name: {
+    firstName: {
       type: String,
       lowercase: true,
       required: [true, "can't be blank"],
       match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
       maxlength: 100,
     },
-    last_name: {
+    lastName: {
       type: String,
       lowercase: true,
       required: [true, "can't be blank"],
@@ -31,13 +31,11 @@ const UserSchema = new Schema(
       maxlength: 100,
     },
     email: {
-      email: {
-        type: String,
-        lowercase: true,
-        unique: true,
-        required: [true, "can't be blank"],
-        match: [/\S+@\S+\.\S+/, 'is invalid'],
-      },
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "can't be blank"],
+      match: [/\S+@\S+\.\S+/, 'is invalid'],
     },
     hash: {
       type: String,
