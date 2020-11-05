@@ -127,6 +127,16 @@ exports.create = (req, res, next) => {
         hash: hashedPassword,
       }).save(err => {
         if (err) {
+          if (err.name === 'ValidationError') {
+            const { errors } = err;
+            const fields = Object.keys(errors);
+            const errorMessages = fields.map(field => ({ msg: `${field} ${errors[field].properties.message}` }));
+            res.render('user/form', {
+              title: 'Create User',
+              user,
+              errors: errorMessages,
+            });
+          }
           return next(err);
         }
         // record saved. Redirect to record url.
