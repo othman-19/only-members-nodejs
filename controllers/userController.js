@@ -55,7 +55,7 @@ exports.show = (req, res, next) => {
 exports.new = (req, res, next) => res.render('user/form', { title: 'Create New User' });
 
 exports.validations = [
-  check('user_name', 'First name required')
+  check('user_name', 'Username required')
     .trim()
     .notEmpty()
     .escape(),
@@ -85,6 +85,7 @@ exports.validations = [
     .withMessage('Password Must Contain an Uppercase Letter')
     .trim()
     .escape(),
+
   check('passwordConfirmation', 'passwordConfirmation field must have the same value as the password field')
     .exists()
     .custom((value, { req }) => value === req.body.password),

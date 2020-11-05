@@ -2,7 +2,7 @@
   <% if (locals.errors) { %>
     <ul>
     <% locals.errors.forEach(function(error){ %>
-      <%= error.msg %>
+      <li> <%= error.msg %> </li>
     <% }); %>
     </ul>
   <% } %>
@@ -22,6 +22,9 @@
 
     <label for="password">Password</label>
     <input type="password" id="password" name="password" placeholder="Password" required>
+
+    <label for="passwordConfirmation">Confirme Password</label>
+    <input type="password" id="passwordConfirmation" name="passwordConfirmation" placeholder="Confirme Password" required>
 
     <button type="submit">Sign up</button> 
     <br> 
