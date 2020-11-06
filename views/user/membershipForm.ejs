@@ -1,0 +1,20 @@
+<div class="container">
+    <% if (locals.errors) { %>
+      <ul>
+      <% locals.errors.forEach(function(error){ %>
+        <li> <%= error.msg %> </li>
+      <% }); %>
+      </ul>
+    <% } %>
+    <h2> Become a member </h2>
+    <form action="/users/create" method="post">
+  
+      <label for="memberPassword">Password</label>
+      <input type="password" id="memberPassword" name="memberPassword" placeholder="Password" required>
+  
+      <label for="memberPasswordConfirmation">Confirme Password</label>
+      <input type="password" id="memberPasswordConfirmation" name="memberPasswordConfirmation" placeholder="Confirme Password" required>
+  
+      <button type="submit">join the club!</button> 
+    </form>
+  </div>
