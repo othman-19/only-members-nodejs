@@ -17,8 +17,9 @@ router.get('/register', (req, res, next) => {
 });
 
 /* GET membership form. */
-router.get('/membership', (req, res, next) => {
-  res.render('user/membershipForm', { title: 'Become member' });
-});
+router.get('/membership', userRoleController.newMember);
+
+/* Post membership form. */
+router.post('/membership', userRoleController.createMember);
 
 module.exports = router;
