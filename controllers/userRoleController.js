@@ -21,7 +21,7 @@ exports.membershipValidations = [
 ];
 
 exports.createMember = (req, res, next) => {
-  let user;
+  const currentUser = req.user;
   // Extract the validation errors from a request.
   const errors = validationResult(req);
 
@@ -45,10 +45,10 @@ exports.createMember = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      user.membership.pass = hashed;
-      user.membership.status = true;
+      currentUser.membership.pass = hashed;
+      currentUser.currentUser.membership.status = true;
       // data saved. Redirect to record url.
-      return res.redirect(user.url);
+      return res.redirect(currentUser.url);
     });
   }
 };
