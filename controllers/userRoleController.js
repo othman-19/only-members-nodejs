@@ -27,7 +27,7 @@ exports.createMember = (req, res, next) => {
 
   // Create a record object with validated data.
   const data = {
-    pass: req.body.memberPassword,
+    memberPassword: req.body.memberPassword,
     memberPasswordConfirmation: req.body.memberPasswordConfirmation,
   };
 
