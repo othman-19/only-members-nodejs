@@ -5,12 +5,17 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const layouts = require('express-ejs-layouts');
+const session = require('express-session');
+const passport = require('passport');
+const initializePassport = require('./config/passport');
+
+require('dotenv').config();
+
+initializePassport(passport);
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
-
-require('dotenv').config();
 
 const app = express();
 
@@ -22,6 +27,10 @@ mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlPars
   .catch(err => {
     console.error(err);
   });
+
+app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // view engine setup
 app.use(layouts);
