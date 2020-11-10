@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const userRoleController = require('../controllers/userRoleController');
+const authentications = require('../config/authentications');
 
 const router = express.Router();
 
@@ -25,9 +26,9 @@ router.get('/register', (req, res, next) => {
 });
 
 /* GET membership form. */
-router.get('/membership', userRoleController.newMember);
+router.get('/membership', authentications.authenticateNotMember, userRoleController.newMember);
 
 /* Post membership form. */
-router.post('/membership', userRoleController.createMember);
+router.post('/membership', authentications.authenticateNotMember, userRoleController.createMember);
 
 module.exports = router;
