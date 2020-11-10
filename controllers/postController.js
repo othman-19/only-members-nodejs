@@ -9,7 +9,7 @@ exports.index = (req, res, next) => {
         return next(err);
       }
       // Successful, so render
-      return res.render('post/posts', { title: 'Posts List', posts });
+      return res.render('post/posts', { title: 'Messages List', posts });
     });
 };
 

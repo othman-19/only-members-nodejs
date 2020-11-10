@@ -7,7 +7,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', authentications.checkAuthenticatedUser, (req, res, next) => {
-  res.render('index', { title: 'Messages' });
+  res.redirect('/posts');
 });
 
 /* GET login form. */
