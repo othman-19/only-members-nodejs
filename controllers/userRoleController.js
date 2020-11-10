@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 
 // Display record new form.
-exports.newMember = (req, res, next) => res.render('user/memberShipForm', { title: 'Become a member' });
+exports.newMember = (req, res, next) => res.render('user/membershipForm', { title: 'Become a member' });
 
 exports.membershipValidations = [
   check('memberPassword')
