@@ -32,6 +32,11 @@ app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: 
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 // view engine setup
 app.use(layouts);
 app.set('views', path.join(__dirname, 'views'));
