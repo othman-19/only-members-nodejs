@@ -6,8 +6,8 @@ const authentications = require('../config/authentications');
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'posts' });
+router.get('/', authentications.checkAuthenticatedUser, (req, res, next) => {
+  res.render('index', { title: 'Messages' });
 });
 
 /* GET login form. */
