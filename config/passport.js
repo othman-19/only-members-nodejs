@@ -8,8 +8,8 @@ const initializePassport = passport => {
     try {
       await User.findOne({ email })
         .exec()
-        .then(doc => { user = doc; })
-        .catch(err => done(err));
+        .then(doc => { user = doc; });
+      // .catch(err => done(err));
 
       if (user === null) {
         return done(null, false, { message: 'No user with that email' });
