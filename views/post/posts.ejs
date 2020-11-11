@@ -7,8 +7,12 @@
       <% posts.forEach(post => { %>
         <dt> <%= post.title %></dt>
         <dd> <%= post.text %></dd>
-        <dd> <%= post.author.fullName %></dd>
-        <dd> <%= post.author.createdAt %></dd>
+        <% if (post.author) { %>
+          <dd> <%= post.author.fullName %></dd>
+          <dd> <%= post.author.createdAt %></dd>
+        <% }; %>
+        <br>
+        <hr>
     </dl>
   <% }); %>
 </div>
