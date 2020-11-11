@@ -60,6 +60,7 @@ exports.create = (req, res, next) => {
   const post = new Post({
     title: req.body.title,
     text: req.body.text,
+    author: req.user,
   });
 
   if (!errors.isEmpty()) {
@@ -73,6 +74,16 @@ exports.create = (req, res, next) => {
   // Data from form is valid. Save record.
   post.save(err => {
     if (err) {
+      if (err.name === 'ValidationError') {
+        const { errors } = err;
+        const fields = Object.keys(errors);
+        const errorMessages = fields.map(field => ({ msg: `${field} ${errors[field].properties.message}` }));
+        res.render('post/form', {
+          title: 'Create Post',
+          post,
+          errors: errorMessages,
+        });
+      }
       return next(err);
     }
     // successful - redirect to new record url.

@@ -14,7 +14,7 @@ const PostSchema = new Schema(
       required: [true, "can't be blank"],
       maxlength: 300,
     },
-    Author: {
+    author: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: [true, "can't be blank"],

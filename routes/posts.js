@@ -1,8 +1,12 @@
 const PostRouter = require('express').Router();
 const postController = require('../controllers/postController');
+const authentications = require('../config/authentications');
 
+// authenticate before any action
+PostRouter.use(authentications.checkAuthenticatedUser);
 // GET request for creating a record.
 // NOTE This must come before route that displays Genre (uses id).
+
 PostRouter.get('/create', postController.new);
 
 // POST request for creating record.

@@ -6,6 +6,7 @@
     <% }); %>
     </ul>
   <% } %>
+  <h1>hi <%= currentUser.userName %></h1>
   <h2>Write New Message</h2>
   <form action="/posts/create" method="post">
     <div>
@@ -16,7 +17,7 @@
         name="title"
         placeholder="Message title"
         required
-        value="<%= typeof locals.message !== 'undefined' ? locals.message.title : '' %>"
+        value="<%= typeof locals.post !== 'undefined' ? locals.post.title : '' %>"
       >
     </div>
     <div>
@@ -27,7 +28,7 @@
         name="text"
         placeholder="Message text"
         required
-        value="<%= typeof locals.message !== 'undefined' ? locals.message.text : '' %>"
+        value="<%= typeof locals.post !== 'undefined' ? locals.post.text : '' %>"
       ></textarea>
     </div>
     <div>
@@ -36,7 +37,7 @@
         id="author"
         name="author"
         required
-        value="<%= typeof currentUser !== 'undefined' ? currentUser : '' %>"
+        value="<%= currentUser %>"
       >
     </div>
     <button type="submit">Send Message</button> 
