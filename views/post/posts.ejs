@@ -5,7 +5,6 @@
   <% const posts = locals.posts %>
     <dl>
       <% posts.forEach(post => { %>
-        <%= post %>
         <dt> <%= post.title %></dt>
         <dd> <%= post.text %></dd>
         <dd> <%= post.author.fullName %></dd>

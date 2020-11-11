@@ -3,7 +3,7 @@ const postController = require('../controllers/postController');
 const authentications = require('../config/authentications');
 
 // authenticate before any action
-PostRouter.use(authentications.checkAuthenticatedUser);
+PostRouter.all('*', authentications.checkAuthenticatedUser);
 // GET request for creating a record.
 // NOTE This must come before route that displays Genre (uses id).
 
