@@ -2,7 +2,7 @@ const { check, validationResult } = require('express-validator');
 const Post = require('../models/post');
 
 exports.index = (req, res, next) => {
-  Post.find({}, 'title')
+  Post.find({}, 'title text')
     .populate('author')
     .exec((err, posts) => {
       if (err) {

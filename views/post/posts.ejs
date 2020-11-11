@@ -1,4 +1,15 @@
 <h1>hi <%= currentUser.userName %></h1>
-<p>Welcome to <%= title %></p>
 <a href="posts/create"> New Message</a>
-<%= locals.posts %>
+<p>Welcome to <%= title %></p>
+<div>
+  <% const posts = locals.posts %>
+    <dl>
+      <% posts.forEach(post => { %>
+        <%= post %>
+        <dt> <%= post.title %></dt>
+        <dd> <%= post.text %></dd>
+        <dd> <%= post.author.fullName %></dd>
+        <dd> <%= post.author.createdAt %></dd>
+    </dl>
+  <% }); %>
+</div>
