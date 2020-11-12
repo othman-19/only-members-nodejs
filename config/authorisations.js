@@ -1,7 +1,8 @@
 exports.scope = async (user, Model, collection, next) => {
   let scope;
-  switch (user.membership.status) {
-    case true:
+  switch (user.role) {
+    case 'admin':
+    case 'member':
       scope = collection;
       break;
     default:
