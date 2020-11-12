@@ -1,3 +1,16 @@
+exports.isMember = (req, res, next) => {
+  if (!req.user.isMember) {
+    return res.redirect(req.user.url);
+  }
+  return next();
+};
+
+exports.isNotMember = (req, res, next) => {
+  if (!req.user.isMember) {
+    return next();
+  }
+  return res.redirect(req.user.url);
+};
 exports.scope = async (user, Model, collection, next) => {
   let scope;
   switch (user.role) {
