@@ -1,33 +1,21 @@
 const { check, validationResult } = require('express-validator');
 const Post = require('../models/post');
+const { scope } = require('../config/authorisations');
 
 exports.index = (req, res, next) => {
-  switch (req.user.membership.status) {
-    case true:
-      Post.find({}, 'title text')
-        .populate('author')
-        .exec((err, posts) => {
-          if (err) {
-            return next(err);
-          }
-          // Successful, so render
-          return res.render('post/posts', { title: 'Messages List', posts });
-        });
-      break;
-    default:
-      Post.find({}, 'title text')
-        .populate({
-          path: 'author',
-          match: { _id: { $eq: req.user._id } },
-        })
-        .exec((err, posts) => {
-          if (err) {
-            return next(err);
-          }
-          // Successful, so render
-          return res.render('post/posts', { title: 'Messages List', posts });
-        });
-  }
+  Post.find({}, 'title text')
+    .populate('author')
+    // eslint-disable-next-line consistent-return
+    .exec((err, posts) => {
+      if (err) {
+        return next(err);
+      }
+      scope(req.user, Post, posts, next)
+        .then(posts => res.render(
+          'post/posts',
+          { title: 'Messages List', posts },
+        ));
+    });
 };
 
 // Display detail page for a specific record.
