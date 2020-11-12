@@ -11,6 +11,21 @@ exports.isNotMember = (req, res, next) => {
   }
   return res.redirect(req.user.url);
 };
+
+exports.isAdmin = (req, res, next) => {
+  if (!req.user.isAdmin) {
+    return res.redirect(req.user.url);
+  }
+  return next();
+};
+
+exports.isNotAdmin = (req, res, next) => {
+  if (!req.user.isAdmin) {
+    return next();
+  }
+  return res.redirect(req.user.url);
+};
+
 exports.scope = async (user, Model, collection, next) => {
   let scope;
   switch (user.role) {
