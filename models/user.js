@@ -41,19 +41,12 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    membership: {
-      status: {
-        type: Boolean,
-        default: false,
-      },
-      pass: String,
-    },
-    admin: {
-      status: {
-        type: Boolean,
-        default: false,
-      },
-      pass: String,
+    role: {
+      type: String,
+      enum: ['basic', 'member', 'admin'],
+      memberPass: String,
+      adminPass: String,
+      default: 'basic',
     },
   },
   { timestamps: true },
