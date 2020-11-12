@@ -52,3 +52,36 @@ exports.createMember = (req, res, next) => {
     });
   }
 };
+
+exports.createAdmin = (req, res, next) => {
+  const currentUser = req.user;
+  // Extract the validation errors from a request.
+  const errors = validationResult(req);
+
+  // Create a record object with validated data.
+  const data = {
+    rolePassword: req.body.rolePassword,
+    rolePasswordConfirmation: req.body.rolePasswordConfirmation,
+  };
+
+  if (!errors.isEmpty()) {
+    // There are errors. Render the form again with sanitized values/error messages.
+    res.render('user/roleForm', {
+      title: 'Become an admin',
+      data,
+      errors: errors.array(),
+    });
+  } else {
+    // Data from form is valid.
+    // eslint-disable-next-line consistent-return
+    bcrypt.hash(req.body.rolePassword, 10, (err, hashed) => {
+      if (err) {
+        return next(err);
+      }
+      currentUser.role.adminPass = hashed;
+      currentUser.role = 'admin';
+      // data saved. Redirect to record url.
+      return res.redirect(currentUser.url);
+    });
+  }
+};
