@@ -73,12 +73,13 @@ UserSchema.post('remove', async () => {
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
 UserSchema.methods.isAdmin = function () {
-  return this.admin.status;
+  return this.role === 'admin';
 };
 
 UserSchema.methods.isMember = function () {
-  return this.membership.status;
+  return this.role === 'admin' || this.role === 'member';
 };
+
 UserSchema.methods.generateJWT = function () {
   const today = new Date();
   const exp = new Date(today);
