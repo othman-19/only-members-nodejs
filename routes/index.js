@@ -30,10 +30,10 @@ router.get('/register', checkNotAuthenticatedUser, (req, res, next) => {
 });
 
 /* GET role form. */
-router.get('/member', checkAuthenticatedUser, isNotMember, roleController.newMember);
+router.get('/member', checkAuthenticatedUser, isNotAdmin, isNotMember, roleController.newMember);
 router.get('/admin', checkAuthenticatedUser, isNotAdmin, roleController.newAdmin);
 /* Post role form. */
-router.post('/member', checkAuthenticatedUser, isNotMember, roleController.createMember);
+router.post('/member', checkAuthenticatedUser, isNotAdmin, isNotMember, roleController.createMember);
 router.post('/admin', checkAuthenticatedUser, isNotAdmin, roleController.createAdmin);
 
 module.exports = router;
