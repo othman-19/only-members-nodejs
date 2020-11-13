@@ -18,6 +18,10 @@
               <input type="hidden" name="_method" value="DELETE">
               <button type="submit">Delete</button>
             </form>
+          </div>
+        <% }; %>
+        <% if (post.author && currentUser._id === post.author._id) { %>
+          <div>
             <form action="<%= post.url + '/update' %>">
               <button type="submit">Edit</button>
             </form>
