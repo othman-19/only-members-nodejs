@@ -1,4 +1,5 @@
 <h1>hi <%= currentUser.userName %></h1>
+<%= currentUser.isMember() %>
 <a href="posts/create"> New Message</a>
 <p>Welcome to <%= title %></p>
 <div>
@@ -11,8 +12,20 @@
           <dd> <%= post.author.fullName %></dd>
           <dd> <%= post.author.createdAt %></dd>
         <% }; %>
-        <br>
+        <% if (post.author && (currentUser._id === post.author._id || currentUser.isAdmin)) { %>
+          <div>
+            <form method="POST" action="<%= post.url %>" enctype="application/x-www-form-urlencoded">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit">Delete</button>
+            </form>
+            <form action="<%= post.url + '/update' %>">
+              <button type="submit">Edit</button>
+            </form>
+          </div>
+        <% }; %>
         <hr>
+        <br>
+      <% }); %>
     </dl>
-  <% }); %>
+  
 </div>

@@ -7,8 +7,8 @@
     </ul>
   <% } %>
   <h1>hi <%= currentUser.userName %></h1>
-  <h2>Write New Message</h2>
-  <form action="/posts/create" method="post">
+  <h2><%= locals.title %></h2>
+  <form action="" method="post">
     <div>
       <label for="title">Title</label>
       <input
@@ -22,14 +22,14 @@
     </div>
     <div>
       <label for="text">Message</label>
-      <textarea
-        type="textarea"
+      <input
+        type="text"
         id="text"
         name="text"
         placeholder="Message text"
         required
         value="<%= typeof locals.post !== 'undefined' ? locals.post.text : '' %>"
-      ></textarea>
+      >
     </div>
     <div>
       <input

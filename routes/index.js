@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const userRoleController = require('../controllers/roleController');
+const roleController = require('../controllers/roleController');
 
 const { checkAuthenticatedUser } = require('../config/authentications');
 const { checkNotAuthenticatedUser } = require('../config/authentications');
@@ -30,10 +30,10 @@ router.get('/register', checkNotAuthenticatedUser, (req, res, next) => {
 });
 
 /* GET role form. */
-router.get('/member', checkAuthenticatedUser, isNotMember, userRoleController.newMember);
-router.get('/admin', checkAuthenticatedUser, isNotAdmin, userRoleController.newAdmin);
+router.get('/member', checkAuthenticatedUser, isNotMember, roleController.newMember);
+router.get('/admin', checkAuthenticatedUser, isNotAdmin, roleController.newAdmin);
 /* Post role form. */
-router.post('/member', checkAuthenticatedUser, isNotMember, userRoleController.createMember);
-router.post('/admin', checkAuthenticatedUser, isNotAdmin, userRoleController.createAdmin);
+router.post('/member', checkAuthenticatedUser, isNotMember, roleController.createMember);
+router.post('/admin', checkAuthenticatedUser, isNotAdmin, roleController.createAdmin);
 
 module.exports = router;

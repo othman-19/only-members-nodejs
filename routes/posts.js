@@ -13,7 +13,7 @@ PostRouter.get('/create', postController.new);
 PostRouter.post('/create', postController.validations, postController.create);
 
 // POST request to delete record.
-PostRouter.delete('/:id/delete', postController.delete);
+PostRouter.delete('/:id', postController.delete);
 
 // GET request to update record.
 PostRouter.get('/:id/update', postController.edit);

@@ -1,26 +1,26 @@
 exports.isMember = (req, res, next) => {
-  if (!req.user.isMember) {
-    return res.redirect(req.user.url);
+  if (req.user.isMember()) {
+    return next();
   }
-  return next();
+  return res.redirect(req.user.url);
 };
 
 exports.isNotMember = (req, res, next) => {
-  if (!req.user.isMember) {
+  if (!req.user.isMember()) {
     return next();
   }
   return res.redirect(req.user.url);
 };
 
 exports.isAdmin = (req, res, next) => {
-  if (!req.user.isAdmin) {
-    return res.redirect(req.user.url);
+  if (req.user.isAdmin()) {
+    return next();
   }
-  return next();
+  return res.redirect(req.user.url);
 };
 
 exports.isNotAdmin = (req, res, next) => {
-  if (!req.user.isAdmin) {
+  if (!req.user.isAdmin()) {
     return next();
   }
   return res.redirect(req.user.url);

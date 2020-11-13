@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
-
+const User = require('../models/user');
 // Display record new form.
-exports.newMember = (req, res, next) => res.render('user/RoleForm', { title: 'Become a member', action: '/member' });
-exports.newAdmin = (req, res, next) => res.render('user/RoleForm', { title: 'Become an Admin', action: '/admin' });
+exports.newMember = (req, res, next) => res.render('user/roleForm', { title: 'Become a member' });
+exports.newAdmin = (req, res, next) => res.render('user/roleForm', { title: 'Become an Admin' });
 
 exports.roleValidations = [
   check('rolePassword')
@@ -46,10 +46,19 @@ exports.createMember = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      currentUser.role.memberPass = hashed;
-      currentUser.role = 'member';
-      // data saved. Redirect to record url.
-      return res.redirect(currentUser.url);
+      User.findByIdAndUpdate(
+        currentUser.id,
+        { role: 'member', memberPass: hashed },
+        {},
+        (error, updatedUser) => {
+          if (error) {
+            return next(error);
+          }
+          // Successful - redirect to record url.
+          return res.redirect('/');
+          // return res.redirect(updatedUser.url);
+        },
+      );
     });
   }
 };
@@ -79,10 +88,19 @@ exports.createAdmin = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      currentUser.role.adminPass = hashed;
-      currentUser.role = 'admin';
-      // data saved. Redirect to record url.
-      return res.redirect(currentUser.url);
+      User.findByIdAndUpdate(
+        currentUser.id,
+        { role: 'admin', adminPass: hashed },
+        {},
+        (error, updatedUser) => {
+          if (error) {
+            return next(error);
+          }
+          // Successful - redirect to record url.
+          return res.redirect('/');
+          // return res.redirect(updatedUser.url);
+        },
+      );
     });
   }
 };

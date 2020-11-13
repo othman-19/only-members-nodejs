@@ -44,10 +44,10 @@ const UserSchema = new Schema(
     role: {
       type: String,
       enum: ['basic', 'member', 'admin'],
-      memberPass: String,
-      adminPass: String,
       default: 'basic',
     },
+    memberPass: String,
+    adminPass: String,
   },
   { timestamps: true },
 );
@@ -57,7 +57,7 @@ UserSchema.virtual('fullName').get(function () {
 });
 
 UserSchema.virtual('url').get(function () {
-  return `/user/${this._id}`;
+  return `/users/${this._id}`;
 });
 
 UserSchema.post('remove', async () => {
@@ -77,7 +77,7 @@ UserSchema.methods.isAdmin = function () {
 };
 
 UserSchema.methods.isMember = function () {
-  return this.role === 'admin' || this.role === 'member';
+  return (this.role === 'admin' || this.role === 'member');
 };
 
 UserSchema.methods.generateJWT = function () {
