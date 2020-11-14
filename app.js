@@ -7,18 +7,18 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const layouts = require('express-ejs-layouts');
 const session = require('express-session');
+const flash = require('express-flash');
 const passport = require('passport');
 const initializePassport = require('./config/passport');
 
 require('dotenv').config();
-
-initializePassport(passport);
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
 const app = express();
+initializePassport(passport);
 
 mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => {
@@ -29,6 +29,7 @@ mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlPars
     console.error(err);
   });
 
+app.use(flash());
 app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -38,16 +39,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// view engine setup
-app.use(layouts);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// view engine setup
+app.use(layouts);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 // eslint-disable-next-line consistent-return
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {

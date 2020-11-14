@@ -1,12 +1,12 @@
 <div class="container">
     <% if (locals.errors) { %>
       <ul>
-      <% locals.errors.forEach(function(error){ %>
+      <% errors.forEach(function(error){ %>
         <li> <%= error.msg %> </li>
       <% }); %>
       </ul>
     <% } %>
-    <h2> <%= locals.title %> </h2>
+    <h2> <%= title %> </h2>
     <form action="" method="post">
   
       <label for="rolePassword">Password</label>

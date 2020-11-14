@@ -23,6 +23,7 @@ router.post('/login', checkNotAuthenticatedUser,
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
+    failureFlash: true,
   }));
 /* GET register form. */
 router.get('/register', checkNotAuthenticatedUser, (req, res, next) => {

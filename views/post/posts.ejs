@@ -1,18 +1,15 @@
 <h1>hi <%= currentUser.userName %></h1>
-<%= currentUser.isMember() %>
 <a href="posts/create"> New Message</a>
 <p>Welcome to <%= title %></p>
 <div>
-  <% const posts = locals.posts %>
-    <dl>
-      <% posts.forEach(post => { %>
-        <dt> <%= post.title %></dt>
-        <dd> <%= post.text %></dd>
-        <% if (post.author) { %>
-          <dd> <%= post.author.fullName %></dd>
-          <dd> <%= post.author.createdAt %></dd>
-        <% }; %>
-        <% if (post.author && (currentUser._id === post.author._id || currentUser.isAdmin)) { %>
+  <dl>
+    <% posts.forEach(post => { %>
+      <dt> <%= post.title %></dt>
+      <dd> <%= post.text %></dd>
+      <% if (post.author) { %>
+        <dd> <%= post.author.fullName %></dd>
+        <dd> <%= post.author.createdAt %></dd>
+        <% if ((currentUser._id.toString() === post.author._id.toString()) || currentUser.isAdmin()) { %>
           <div>
             <form method="POST" action="<%= post.url %>" enctype="application/x-www-form-urlencoded">
               <input type="hidden" name="_method" value="DELETE">
@@ -20,16 +17,19 @@
             </form>
           </div>
         <% }; %>
-        <% if (post.author && currentUser._id === post.author._id) { %>
+
+        <% if (currentUser._id.toString() === post.author._id.toString()) { %>
           <div>
             <form action="<%= post.url + '/update' %>">
               <button type="submit">Edit</button>
             </form>
           </div>
         <% }; %>
-        <hr>
-        <br>
-      <% }); %>
-    </dl>
+
+      <% }; %>
+      <hr>
+      <br>
+    <% }); %>
+  </dl>
   
 </div>
