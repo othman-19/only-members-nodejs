@@ -1,4 +1,15 @@
-<h2>messages:</h2>
 <% if (messages.error) { %>
-  <%= messages.error %>
+  <p><%= messages.error %></p>
+<% } %>
+
+<% if (locals.errors) { %>
+    <ul>
+      <% locals.errors.forEach(function(error){ %>
+        <li> <strong>Warning!</strong> <%= error.msg %> </li>
+      <% }); %>
+  </ul>
+<% } %>
+
+<% if (messages.info) { %>
+  <p><%= messages.info %></p>
 <% } %>

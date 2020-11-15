@@ -60,9 +60,9 @@ UserSchema.virtual('url').get(function () {
   return `/users/${this._id}`;
 });
 
-UserSchema.post('remove', async () => {
+UserSchema.pre('findByIdAndRemove', async () => {
   try {
-    return await Post.Remove({
+    return await Post.remove({
       _id: { $in: this.posts },
     });
   } catch (err) {

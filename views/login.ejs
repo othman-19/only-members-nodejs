@@ -1,13 +1,7 @@
 <div class="container">
-  <% if (locals.errors) { %>
-    <ul>
-    <% locals.errors.forEach(function(error){ %>
-      <li> <strong>Warning!</strong> <%= error.msg %> </li>
-    <% }); %>
-    </ul>
-  <% } %>
-  
-  <%- include('partials/messages.ejs') %>
+  <div>
+    <%- include('partials/messages.ejs') %>
+  </div>
   <h2>Please Sign In</h2>
   <form action="/login" method="post">
     <label for="email">User name</label>

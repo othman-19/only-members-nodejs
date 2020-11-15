@@ -42,10 +42,10 @@ exports.show = (req, res, next) => {
         return next(error);
       }
       // Successful, so render
-      return res.render('/user/show', {
+      return res.render('user/show', {
         title: 'User Detail',
         user: results.user,
-        userPosts: results.userPosts,
+        posts: results.userPosts,
       });
     },
   );
@@ -125,7 +125,8 @@ exports.create = (req, res, next) => {
         lastName: req.body.lastName,
         email: req.body.email,
         hash: hashedPassword,
-      }).save(err => {
+      });
+      user.save(err => {
         if (err) {
           if (err.name === 'ValidationError') {
             const { errors } = err;
@@ -137,10 +138,10 @@ exports.create = (req, res, next) => {
               errors: errorMessages,
             });
           }
-          return next(err);
+          // return next(err);
         }
         // record saved. Redirect to record url.
-        return res.redirect(user.url);
+        return res.redirect('/login');
       });
     });
   }

@@ -1,0 +1,42 @@
+
+<h1>Hi <%= currentUser.userName %>!</h1>
+<h2><%= currentUser.fullName %></h2>
+<a href="/posts/create"> Create New Message</a>
+<div style='margin-left:20px;margin-top:20px'>
+  <% if (!currentUser.isMember()) { %>
+    <p>You are not member</p>
+    <p><a href="/member">Register as a member</a></p>
+  <% } %>
+
+  <% if (!currentUser.isAdmin()) { %>
+    <p>Or would you like to be an admin</p>
+    <p><a href="/admin">Register as an admin</a></p>
+  <% } %>
+  <% if (locals.posts.length > 0) { %>
+    <h2>Messages</h2>
+    <dl>
+      <% posts.forEach(post => { %>
+        <dt>
+          <%= post.title %>
+        </dt>
+        <dd>
+          <%= post.text %>
+        </dd>
+      <% }) %>
+    </dl>
+  <% } else { %>
+       <p>You have no messages</p>
+  <% } %>
+  <hr>
+  <div>
+    <form method="POST" action="<%= currentUser.url %>" enctype="application/x-www-form-urlencoded">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit">Delete user</button>
+    </form>
+  </div>
+  <div>
+    <form action="<%= currentUser.url + '/update' %>">
+      <button type="submit">Update user</button>
+    </form>
+  </div>
+</div>

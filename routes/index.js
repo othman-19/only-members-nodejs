@@ -11,6 +11,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', checkAuthenticatedUser, (req, res, next) => {
+  req.flash('info', 'Welcome');
   res.redirect('/posts');
 });
 

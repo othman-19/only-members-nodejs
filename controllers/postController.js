@@ -92,7 +92,7 @@ exports.create = (req, res, next) => {
       return next(err);
     }
     // successful - redirect to new record url.
-    return res.redirect(post.url);
+    return res.redirect('/');
   });
 };
 
@@ -158,7 +158,7 @@ exports.update = (req, res, next) => {
           return next(error);
         }
         // Successful - redirect to record url.
-        return res.redirect(updatedPost.url);
+        return res.redirect('/');
       },
     );
   }
