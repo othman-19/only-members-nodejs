@@ -1,11 +1,4 @@
 <div class="container">
-  <% if (locals.errors) { %>
-    <ul>
-    <% errors.forEach(function(error){ %>
-      <li> <%= error.msg %> </li>
-    <% }); %>
-    </ul>
-  <% } %>
   <h2>Please Register</h2>
   <form action="/users/create" method="post">
     <label for="userName">User name</label>
