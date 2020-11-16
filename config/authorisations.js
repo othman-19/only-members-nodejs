@@ -2,6 +2,7 @@ exports.isMember = (req, res, next) => {
   if (req.user.isMember()) {
     return next();
   }
+  req.flash('danger', 'You should be a member!');
   return res.redirect(req.user.url);
 };
 
@@ -9,6 +10,7 @@ exports.isNotMember = (req, res, next) => {
   if (!req.user.isMember()) {
     return next();
   }
+  req.flash('danger', 'You are already a member!');
   return res.redirect(req.user.url);
 };
 
@@ -16,6 +18,7 @@ exports.isAdmin = (req, res, next) => {
   if (req.user.isAdmin()) {
     return next();
   }
+  req.flash('danger', 'You should be an admin!');
   return res.redirect(req.user.url);
 };
 
@@ -23,6 +26,7 @@ exports.isNotAdmin = (req, res, next) => {
   if (!req.user.isAdmin()) {
     return next();
   }
+  req.flash('danger', 'You are already an admin!');
   return res.redirect(req.user.url);
 };
 

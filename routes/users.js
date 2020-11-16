@@ -1,5 +1,4 @@
 const UserRouter = require('express').Router();
-
 const userController = require('../controllers/userController');
 
 // GET request for creating a record. NOTE This must come before routes that display user.

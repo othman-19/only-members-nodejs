@@ -91,6 +91,7 @@ exports.validations = [
     .custom((value, { req }) => value === req.body.password),
 ];
 
+// eslint-disable-next-line consistent-return
 exports.create = (req, res, next) => {
   // Extract the validation errors from a request.
   const errors = validationResult(req);
@@ -107,44 +108,44 @@ exports.create = (req, res, next) => {
 
   if (!errors.isEmpty()) {
     // There are errors. Render the form again with sanitized values/error messages.
-    res.render('user/form', {
+    return res.render('user/form', {
       title: 'Create User',
       user,
       errors: errors.array(),
     });
-  } else {
-    // Data from form is valid.
-    // eslint-disable-next-line consistent-return
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-      if (err) {
-        return next(err);
-      }
-      user = new User({
-        userName: req.body.userName,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        hash: hashedPassword,
-      });
-      user.save(err => {
-        if (err) {
-          if (err.name === 'ValidationError') {
-            const { errors } = err;
-            const fields = Object.keys(errors);
-            const errorMessages = fields.map(field => ({ msg: `${field} ${errors[field].properties.message}` }));
-            res.render('user/form', {
-              title: 'Create User',
-              user,
-              errors: errorMessages,
-            });
-          }
-          // return next(err);
-        }
-        // record saved. Redirect to record url.
-        return res.redirect('/login');
-      });
-    });
   }
+  // Data from form is valid.
+  // eslint-disable-next-line consistent-return
+  bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+    if (err) {
+      return next(err);
+    }
+    user = new User({
+      userName: req.body.userName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      hash: hashedPassword,
+    });
+    user.save(err => {
+      if (err) {
+        if (err.name === 'ValidationError') {
+          const { errors } = err;
+          const fields = Object.keys(errors);
+          const errorMessages = fields.map(field => ({ msg: `${field} ${errors[field].properties.message}` }));
+          return res.render('user/form', {
+            title: 'Create User',
+            user,
+            errors: errorMessages,
+          });
+        }
+        // return next(err);
+      }
+      // record saved. Redirect to record url.
+      req.flash('success', 'Congratulation you are registred');
+      return res.redirect('/login');
+    });
+  });
 };
 
 exports.delete = (req, res, next) => {
@@ -154,10 +155,11 @@ exports.delete = (req, res, next) => {
     }
     if (user === null) {
       // No results.
-      res.redirect(`/users/${req.body.userid}`);
+      return res.redirect(`/users/${req.body.userid}`);
     }
     // record deleted. Redirect to index page.
-    return res.redirect('/');
+    req.flash('success', 'User Deleted');
+    return res.redirect('/posts');
   });
 };
 
@@ -174,9 +176,10 @@ exports.edit = (req, res, next) => {
       title: 'Update User',
       user,
     });
-  }).exec();
+  });
 };
 
+// eslint-disable-next-line consistent-return
 exports.update = (req, res, next) => {
   // Extract the validation errors from a request.
   const errors = validationResult(req);
@@ -193,38 +196,39 @@ exports.update = (req, res, next) => {
 
   if (!errors.isEmpty()) {
     // There are errors. Render the form again with sanitized values/error messages.
-    res.render('user/form', {
+    console.log('here');
+    return res.render('user/form', {
       title: 'Update User',
       user,
       errors: errors.array(),
     });
-  } else {
-    // Data from form is valid.
-    // eslint-disable-next-line consistent-return
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-      if (err) {
-        return next(err);
-      }
-      user = new User({
-        userName: req.body.userName,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        hash: hashedPassword,
-        _id: req.params.id,
-      });
-      User.findByIdAndUpdate(
-        req.params.id,
-        user,
-        {},
-        (error, updatedUser) => {
-          if (error) {
-            return next(error);
-          }
-          // Successful - redirect to record url.
-          return res.redirect(updatedUser.url);
-        },
-      );
-    });
   }
+  // Data from form is valid.
+  // eslint-disable-next-line consistent-return
+  bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+    if (err) {
+      return next(err);
+    }
+    user = new User({
+      userName: req.body.userName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      hash: hashedPassword,
+      _id: req.params.id,
+    });
+    User.findByIdAndUpdate(
+      req.params.id,
+      user,
+      {},
+      (error, updatedUser) => {
+        if (error) {
+          return next(error);
+        }
+        // Successful - redirect to record url.
+        req.flash('success', 'User Updated');
+        return res.redirect('/');
+      },
+    );
+  });
 };

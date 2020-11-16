@@ -1,4 +1,4 @@
-
+<%- include('../partials/messages.ejs') %>
 <h1>Hi <%= currentUser.userName %>!</h1>
 <h2><%= currentUser.fullName %></h2>
 <a href="/posts/create"> Create New Message</a>
@@ -35,8 +35,6 @@
     </form>
   </div>
   <div>
-    <form action="<%= currentUser.url + '/update' %>">
-      <button type="submit">Update user</button>
-    </form>
+    <a href="<%=currentUser.url + '/update'%>">Update user</a>
   </div>
 </div>

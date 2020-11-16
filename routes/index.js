@@ -11,7 +11,6 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', checkAuthenticatedUser, (req, res, next) => {
-  req.flash('info', 'Welcome');
   res.redirect('/posts');
 });
 
@@ -23,6 +22,7 @@ router.get('/login', checkNotAuthenticatedUser, (req, res, next) => {
 router.post('/login', checkNotAuthenticatedUser,
   passport.authenticate('local', {
     successRedirect: '/',
+    successFlash: 'Welcome user',
     failureRedirect: '/login',
     failureFlash: true,
   }));

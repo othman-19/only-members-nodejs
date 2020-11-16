@@ -50,11 +50,12 @@ exports.createMember = (req, res, next) => {
         currentUser.id,
         { role: 'member', memberPass: hashed },
         {},
-        (error, updatedUser) => {
+        error => {
           if (error) {
             return next(error);
           }
           // Successful - redirect to record url.
+          req.flash('success', 'Congratulation you are a member now!');
           return res.redirect('/');
           // return res.redirect(updatedUser.url);
         },
@@ -92,11 +93,12 @@ exports.createAdmin = (req, res, next) => {
         currentUser.id,
         { role: 'admin', adminPass: hashed },
         {},
-        (error, updatedUser) => {
+        error => {
           if (error) {
             return next(error);
           }
           // Successful - redirect to record url.
+          req.flash('success', 'Congratulation you are an admin now!');
           return res.redirect('/');
           // return res.redirect(updatedUser.url);
         },

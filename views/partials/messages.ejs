@@ -10,6 +10,12 @@
   </ul>
 <% } %>
 
+<% if (messages.success) { %>
+  <p><%= messages.success %></p>
+<% } %>
 <% if (messages.info) { %>
   <p><%= messages.info %></p>
+<% } %>
+<% if (messages.danger) { %>
+  <p><%= messages.danger %></p>
 <% } %>

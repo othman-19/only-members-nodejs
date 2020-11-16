@@ -10,6 +10,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const initializePassport = require('./config/passport');
+const { checkAuthenticatedUser } = require('./config/authentications');
 
 require('dotenv').config();
 
@@ -59,9 +60,10 @@ app.use(methodOverride((req, res) => {
     return method;
   }
 }));
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
+app.use('/users', checkAuthenticatedUser, usersRouter);
+app.use('/posts', checkAuthenticatedUser, postsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

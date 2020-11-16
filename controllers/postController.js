@@ -11,10 +11,12 @@ exports.index = (req, res, next) => {
         return next(err);
       }
       scope(req.user, Post, posts, next)
-        .then(posts => res.render(
-          'post/posts',
-          { title: 'Messages List', posts },
-        ));
+        .then(posts => {
+          if (!req.user.isMember()) {
+            req.flash('info', 'You Should be a member te see messages author');
+          }
+          res.render('post/posts', { title: 'Messages List', posts });
+        });
     });
 };
 
@@ -92,7 +94,8 @@ exports.create = (req, res, next) => {
       return next(err);
     }
     // successful - redirect to new record url.
-    return res.redirect('/');
+    req.flash('success', 'Message Created');
+    return res.redirect('/posts');
   });
 };
 
@@ -103,10 +106,12 @@ exports.delete = (req, res, next) => {
     }
     if (post === null) {
       // No results.
-      res.redirect(`/posts/${req.body.postid}`);
+      req.flash('info', 'Message not found');
+      res.redirect('/');
     }
     // record deleted. Redirect to index page.
-    return res.redirect('/');
+    req.flash('success', 'Message Deleted');
+    return res.redirect('/posts');
   });
 };
 
@@ -153,12 +158,13 @@ exports.update = (req, res, next) => {
       req.params.id,
       post,
       {},
-      (error, updatedPost) => {
+      error => {
         if (error) {
           return next(error);
         }
         // Successful - redirect to record url.
-        return res.redirect('/');
+        req.flash('success', 'Message Updated');
+        return res.redirect('/posts');
       },
     );
   }
