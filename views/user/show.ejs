@@ -35,6 +35,8 @@
     </form>
   </div>
   <div>
-    <a href="<%=currentUser.url + '/update'%>">Update user</a>
+    <form action="<%= currentUser.url + '/update' %>">
+      <button type="submit">Update user</button>
+    </form>
   </div>
 </div>

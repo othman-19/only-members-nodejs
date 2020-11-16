@@ -65,6 +65,12 @@ app.use('/', indexRouter);
 app.use('/users', checkAuthenticatedUser, usersRouter);
 app.use('/posts', checkAuthenticatedUser, postsRouter);
 
+app.delete('/logout', (req, res) => {
+  req.logOut();
+  req.flash('info', 'You logged out');
+  res.redirect('/login');
+});
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
