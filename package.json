@@ -20,6 +20,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
     "express-validator": "^6.6.1",
+    "helmet": "^4.2.0",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",

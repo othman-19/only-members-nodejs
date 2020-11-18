@@ -10,6 +10,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const cors = require('cors');
+const helmet = require("helmet");
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
 
@@ -31,6 +32,7 @@ mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlPars
     console.error(err);
   });
 
+app.use(helmet());
 app.use(flash());
 app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
