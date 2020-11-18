@@ -32,22 +32,28 @@ mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlPars
     console.error(err);
   });
 
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 app.use(flash());
-app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
-});
-
-const allowedOrigins = ['http://localhost:3000', 'http://myrapp.com'];
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    // secure: true,
+  },
+}));
+const allowedOrigins = ['null', 'http://localhost:3000', 'http://myrapp.com'];
 app.use(cors({
   origin(origin, callback) {
     // allow requests with no origin
     // (like mobile apps or curl requests)
+    console.log(origin);
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = 'The CORS policy for this site does not '
@@ -59,11 +65,12 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 // view engine setup
 app.use(layouts);
@@ -84,10 +91,10 @@ app.use('/', indexRouter);
 app.use('/users', checkAuthenticatedUser, usersRouter);
 app.use('/posts', checkAuthenticatedUser, postsRouter);
 
-app.delete('/logout', (req, res) => {
+app.delete('/logout', checkAuthenticatedUser, (req, res) => {
   req.logOut();
   req.flash('info', 'You logged out');
-  res.redirect('/login');
+  req.session.destroy(() => res.redirect('/'));
 });
 
 // catch 404 and forward to error handler
@@ -101,16 +108,6 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
 app.use((err, req, res, next) => {
   if (req.app.get('env') === 'production') {
     res.status(500);
