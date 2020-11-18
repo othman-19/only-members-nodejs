@@ -10,7 +10,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const cors = require('cors');
-const helmet = require("helmet");
+const helmet = require('helmet');
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
 
@@ -92,7 +92,12 @@ app.delete('/logout', (req, res) => {
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+  if (req.app.get('env') === 'production') {
+    res.status(400);
+    res.render('404', { title: '404: File Not Found' });
+  } else {
+    next(createError(404));
+  }
 });
 
 // error handler
@@ -104,6 +109,21 @@ app.use((err, req, res, next) => {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.use((err, req, res, next) => {
+  if (req.app.get('env') === 'production') {
+    res.status(500);
+    res.render('500', { title: '500: Internal Server Error', err });
+  } else {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = err;
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+  }
 });
 
 module.exports = app;
