@@ -39,10 +39,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 app.use(flash());
+app.set('trust proxy', 1); // trust first proxy
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
+  name: 'sessionId',
   cookie: {
     httpOnly: true,
     // secure: true,
