@@ -11,6 +11,7 @@ const flash = require('express-flash');
 const passport = require('passport');
 const cors = require('cors');
 const helmet = require('helmet');
+const csrf = require('csurf');
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
 
@@ -19,9 +20,6 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
-
-const app = express();
-initializePassport(passport);
 
 mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => {
@@ -32,13 +30,17 @@ mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlPars
     console.error(err);
   });
 
+const app = express();
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(helmet());
 app.use(flash());
+
+app.use(helmet());
+
 app.set('trust proxy', 1); // trust first proxy
 app.use(session({
   secret: process.env.SECRET,
@@ -50,6 +52,7 @@ app.use(session({
     // secure: true,
   },
 }));
+
 const allowedOrigins = ['null', 'http://localhost:3000', 'http://myrapp.com'];
 app.use(cors({
   origin(origin, callback) {
@@ -67,6 +70,14 @@ app.use(cors({
   credentials: true,
 }));
 
+const csrfProtection = csrf({ cookie: true });
+app.use(csrfProtection);
+app.use((req, res, next) => {
+  res.locals._csrf = req.csrfToken();
+  next();
+});
+
+initializePassport(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
@@ -123,6 +134,14 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error');
   }
+});
+
+// CSRF error handler
+app.use((err, req, res, next) => {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err);
+  // handle CSRF token errors here
+  res.status(403);
+  return res.send('form tampered with');
 });
 
 module.exports = app;

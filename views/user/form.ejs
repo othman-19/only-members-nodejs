@@ -1,25 +1,41 @@
 <div class="container">
   <h2>Please Register</h2>
   <form action="" method="post">
-    <label for="userName">User name</label>
-    <input type="text" id="userName" name="userName" placeholder="User Name" required value="<%= typeof locals.user !== 'undefined' ? locals.user.userName : '' %>">
 
-    <label for="firstName">First name</label>
-    <input type="text" id="firstName" name="firstName" placeholder="First Name" required value="<%= typeof locals.user !== 'undefined' ? locals.user.firstName : '' %>">
+    <input type="hidden" name="_csrf" value="<%= _csrf %>">
 
-    <label for="lastName">Last name</label>
-    <input type="text" id="lastName" name="lastName" placeholder="Last Name" required value="<%= typeof locals.user !== 'undefined' ? locals.user.lastName : '' %>">
+    <div>
+      <label for="userName">User name</label>
+      <input type="text" id="userName" name="userName" placeholder="User Name" required value="<%= typeof locals.user !== 'undefined' ? locals.user.userName : '' %>">
+    </div>
+    
+    <div>
+      <label for="firstName">First name</label>
+      <input type="text" id="firstName" name="firstName" placeholder="First Name" required value="<%= typeof locals.user !== 'undefined' ? locals.user.firstName : '' %>">
+    </div>
+    
+    <div>
+      <label for="lastName">Last name</label>
+      <input type="text" id="lastName" name="lastName" placeholder="Last Name" required value="<%= typeof locals.user !== 'undefined' ? locals.user.lastName : '' %>">
+    </div>
 
-    <label for="email">Email address</label>
-    <input type="email" id="email" name="email" placeholder="Email address" required value="<%= typeof locals.user !== 'undefined' ? locals.user.email : '' %>">
+    <div>
+      <label for="email">Email address</label>
+      <input type="email" id="email" name="email" placeholder="Email address" required value="<%= typeof locals.user !== 'undefined' ? locals.user.email : '' %>">
+    </div>
+    
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Password" required value="<%= typeof locals.user !== 'undefined' ? locals.user.password : '' %>">
+    </div>
 
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" placeholder="Password" required value="<%= typeof locals.user !== 'undefined' ? locals.user.password : '' %>">
-
-    <label for="passwordConfirmation">Confirme Password</label>
-    <input type="password" id="passwordConfirmation" name="passwordConfirmation" placeholder="Confirme Password" required value="<%= typeof locals.user !== 'undefined' ? locals.user.passwordConfirmation : '' %>">
+    <div>
+      <label for="passwordConfirmation">Confirme Password</label>
+      <input type="password" id="passwordConfirmation" name="passwordConfirmation" placeholder="Confirme Password" required value="<%= typeof locals.user !== 'undefined' ? locals.user.passwordConfirmation : '' %>">
+    </div>
 
     <button type="submit">Sign up</button> 
+    
     <br> 
     <p>Do you have an account? <a href="/login">Sign In</a></p>
   </form>

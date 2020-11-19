@@ -1,7 +1,9 @@
 <div class="container">
     <h2> <%= title %> </h2>
     <form action="" method="post">
-  
+      
+      <input type="hidden" name="_csrf" value="<%= _csrf %>">
+      
       <label for="rolePassword">Password</label>
       <input type="password" id="rolePassword" name="rolePassword" placeholder="Password" required>
   
