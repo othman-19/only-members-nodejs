@@ -12,6 +12,7 @@ const passport = require('passport');
 const cors = require('cors');
 const helmet = require('helmet');
 const csrf = require('csurf');
+const rateLimit = require('express-rate-limit');
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
 
@@ -76,6 +77,12 @@ app.use((req, res, next) => {
   res.locals._csrf = req.csrfToken();
   next();
 });
+
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  delayMs: 0, // disable delaying - user has full speed until the max limit is reached
+}));
 
 initializePassport(passport);
 app.use(passport.initialize());
