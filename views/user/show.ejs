@@ -31,12 +31,14 @@
   <div>
     <form method="POST" action="<%= currentUser.url %>" enctype="application/x-www-form-urlencoded">
       <input type="hidden" name="_method" value="DELETE">
+      <input type="hidden" name="_csrf" value="<%= _csrf %>">
       <button type="submit">Delete user</button>
     </form>
   </div>
   <div>
     <form action="<%= currentUser.url + '/update' %>">
       <button type="submit">Update user</button>
+      <input type="hidden" name="_csrf" value="<%= _csrf %>">
     </form>
   </div>
 </div>

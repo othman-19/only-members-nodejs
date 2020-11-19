@@ -16,6 +16,7 @@
           <div>
             <form method="POST" action="<%= post.url %>" enctype="application/x-www-form-urlencoded">
               <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="_csrf" value="<%= _csrf %>">
               <button type="submit">Delete</button>
             </form>
           </div>
@@ -24,6 +25,7 @@
         <% if (currentUser._id.toString() === post.author._id.toString()) { %>
           <div>
             <form action="<%= post.url + '/update' %>">
+              <input type="hidden" name="_csrf" value="<%= _csrf %>">
               <button type="submit">Edit</button>
             </form>
           </div>
