@@ -1,8 +1,9 @@
 <div>
   <%- include('../partials/messages.ejs') %>
 </div>
-<a href="posts/create"> New Message</a>
-<p>Welcome to <%= title %></p>
+
+<a class="button is-medium is-primary" href="posts/create"> New Message</a>
+<h1><%= title %></h1>
 <div>
   <dl>
     <% posts.forEach(post => { %>
