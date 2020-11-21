@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
+const userController = require('../controllers/userController');
 const roleController = require('../controllers/roleController');
-
 const { checkAuthenticatedUser } = require('../config/authentications');
 const { checkNotAuthenticatedUser } = require('../config/authentications');
 const { isNotMember } = require('../config/authorisations');
@@ -27,9 +27,8 @@ router.post('/login', checkNotAuthenticatedUser,
     failureFlash: true,
   }));
 /* GET register form. */
-router.get('/register', checkNotAuthenticatedUser, (req, res, next) => {
-  res.redirect('users/create');
-});
+router.get('/register', checkNotAuthenticatedUser, userController.new);
+router.post('/register', checkNotAuthenticatedUser, userController.create);
 
 /* GET role form. */
 router.get('/member', checkAuthenticatedUser, isNotAdmin, isNotMember, roleController.newMember);
