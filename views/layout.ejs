@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= locals.title %></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <%- include('partials/navbar.ejs') %>
-    <div class="container pt-6">
+    <div class="container pt-6 pb-6">
       <%- include('partials/messages.ejs') %>
       <%- body %>
     </div>
