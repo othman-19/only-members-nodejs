@@ -8,31 +8,33 @@
   <div>
     <% if (locals.posts.length > 0) { %>
       <h4 class="title is-4">Your Messages</h4>
-      <article class="message">
+      <div class="content">
         <% posts.forEach(post => { %>
-          <div class="message-header">
-            <p><%= post.title %></p>
-          </div>
-          <div class="message-body">
-            <p><%= post.text %></p>
-            <div class="is-flex">
-              <div class="mt-2 mb-2 mr-2">
-                <form method="POST" action="<%= post.url %>" enctype="application/x-www-form-urlencoded">
-                  <input type="hidden" name="_method" value="DELETE">
-                  <input type="hidden" name="_csrf" value="<%= _csrf %>">
-                  <button class="button is-small is-rounded is-danger" type="submit">Delete</button>
-                </form>
-              </div>
-              <div class="mt-2 mb-2 mr-2">
-                <form action="<%= post.url + '/update' %>">
-                  <input type="hidden" name="_csrf" value="<%= _csrf %>">
-                  <button class="button is-small is-rounded is-primary" type="submit">Edit</button>
-                </form>
+          <article class="message">
+            <div class="message-header">
+              <p><%= post.title %></p>
+            </div>
+            <div class="message-body">
+              <p><%= post.text %></p>
+              <div class="is-flex">
+                <div class="mt-2 mb-2 mr-2">
+                  <form method="POST" action="<%= post.url %>" enctype="application/x-www-form-urlencoded">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                    <button class="button is-small is-rounded is-danger" type="submit">Delete</button>
+                  </form>
+                </div>
+                <div class="mt-2 mb-2 mr-2">
+                  <form action="<%= post.url + '/update' %>">
+                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                    <button class="button is-small is-rounded is-primary" type="submit">Edit</button>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
+          </article>
         <% }) %>
-      </article>
+      </div>
     <% } else { %>
       <p class="is-warning">You have no messages!</p>
     <% } %>
