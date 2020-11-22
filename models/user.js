@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const jwt = require('jsonwebtoken');
-const Post = require('./post');
+// const Post = require('./post');
 const { secret } = require('../config/index');
 
 const { Schema } = mongoose;
@@ -60,15 +60,14 @@ UserSchema.virtual('url').get(function () {
   return `/users/${this._id}`;
 });
 
-UserSchema.pre('findByIdAndRemove', async () => {
-  try {
-    return await Post.remove({
-      _id: { $in: this.posts },
-    });
-  } catch (err) {
-    return err;
-  }
-});
+// UserSchema.post('remove', function (err) {
+//   if (err) {
+//     return err;
+//   }
+//   Post.remove({
+//     _id: { $in: this.posts },
+//   });
+// });
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 

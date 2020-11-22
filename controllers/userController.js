@@ -1,5 +1,6 @@
 const async = require('async');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const Post = require('../models/post');
@@ -149,17 +150,38 @@ exports.create = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  User.findByIdAndRemove(req.params.id, (err, user) => {
+  async.waterfall([
+    callback => {
+      User.findByIdAndRemove(req.params.id, (err, user) => {
+        if (err) {
+          return next(err);
+        }
+        if (user === null) {
+          // No results.
+          return res.redirect(`/users/${req.body.userid}`);
+        }
+        return user;
+      });
+      callback(null, req.params.id);
+    },
+    (arg1, callback) => {
+      Post.remove({ author: mongoose.Types.ObjectId(arg1) },
+        (err, docs) => {
+          if (err) {
+            return next(err);
+          }
+          return docs;
+        });
+      callback(null, req.params.id);
+    },
+  ],
+  (err, result) => {
     if (err) {
       return next(err);
     }
-    if (user === null) {
-      // No results.
-      return res.redirect(`/users/${req.body.userid}`);
-    }
-    // record deleted. Redirect to index page.
+    // records deleted. Redirect to index page.
     req.flash('success', 'User Deleted');
-    return res.redirect('/posts');
+    return res.redirect('/login');
   });
 };
 
