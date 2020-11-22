@@ -19,19 +19,31 @@ I will use my authentication skills learned, and also I will be practicing my da
 - Npm.
 - Html.
 - CSS.
-- Bootstarp.
+- Bulma.
 - EJS.
 - MongoDB.
 
 ## Features:
 
-- Everyone could signup using full name and a password.
-- All members could login using their full names and passwords.
-- Passwords are secured with bcrypt.js.
+- Everyone could sign up.
+- All members could login using their emails and passwords.
 - Only memebers could see the posts' authors.
+- Only memebers could see the posts' created at.
 - It includes all of the CRUD methods for posts, so anybody that’s visiting the site can Create, Read, Update or Delete their own posts.
 - Admin has the ability to see all authors and permitted to delete all messages.
-- 
+
+## Security
+- Protected from Cross site request forgery(csrf) using CSURF npm package.
+- Protected from Cross site scripting(xss) and injection by validating and sanitization the data.
+- Passwords are secured with bcrypt.js.
+- Cookies used for http only (not allowed for browser JavaScript).
+- Cookies are destroyed after logout(ephemeral cookies).
+- protected from DoS attacks by using the Rate limiting. The rate of requests that the server can receive from a specific user and / or IP address is controled.
+- Set various HTTP headers, change default headers values or hide others by using Helmet.
+
+## Future features
+- Implement Json Web Token (JWT) authorization system.
+- Add beautiful langing page.  
 
 ### Prerequisites
 
