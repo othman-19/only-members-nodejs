@@ -47,7 +47,12 @@
     <div class="navbar-end">
       <% if (typeof locals.currentUser !== 'undefined') { %>
         <div class="navbar-item">
-          <a href="<%= currentUser.url %>"><%= currentUser.userName %></a>
+          <span class="icon has-text-success">
+            <i class="fas fa-check-circle"></i>
+          </span>
+          <div class="tags has-addons">
+            <span class="tag is-light is-rounded"> <a href="<%= currentUser.url %>"><%= currentUser.userName %></a></span>
+          </div>
         </div>
       <% } %>
       

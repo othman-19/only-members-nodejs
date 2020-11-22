@@ -1,7 +1,27 @@
 <div class="container">
   <%- include('../partials/messages.ejs') %>
-  <h1 class="title is-2"><%= currentUser.fullName %></h1>
   
+  <h1 class="title is-2"><%= currentUser.fullName %></h1>
+
+  <div class="field is-grouped is-grouped-multiline">
+    <% if (currentUser.isMember()) { %>
+      <div class="control">
+        <div class="tags has-addons">
+          <span class="tag is-dark">Member</span>
+          <span class="tag is-success">yes</span>
+        </div>
+      </div>  
+    <% } %>
+    <% if (currentUser.isAdmin()) { %>
+      <div class="control">
+        <div class="tags has-addons">
+          <span class="tag is-dark">Admin</span>
+          <span class="tag is-success">yes</span>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
   <div class="mt-6 mb-6">
     <a class="button is-medium is-link mb3" href="posts/create"> New Message</a>
   </div>
