@@ -15,6 +15,10 @@ router.get('/', checkAuthenticatedUser, (req, res, next) => {
   res.redirect('/posts');
 });
 
+router.get('/docs', (req, res, next) => {
+  res.render('README.ejs');
+});
+
 /* GET login form. */
 router.get('/login', checkNotAuthenticatedUser, (req, res, next) => {
   res.render('login', { title: 'Log In' });
