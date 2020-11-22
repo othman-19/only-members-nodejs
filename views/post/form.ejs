@@ -1,29 +1,35 @@
 <div class="container">
-  <h1>hi <%= currentUser.userName %></h1>
-  <h2><%= title %></h2>
+  <h1 class="title is-2 has-text-centered"><%= title %></h1>
   <form action="" method="post">
     <input type="hidden" name="_csrf" value="<%= _csrf %>">
-    <div>
-      <label for="title">Title</label>
-      <input
-        type="text"
-        id="title"
-        name="title"
-        placeholder="Message title"
-        required
-        value="<%= typeof locals.post !== 'undefined' ? locals.post.title : '' %>"
-      >
+
+    <div class="field">
+      <label class="label" for="title">Title</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Message title"
+          required
+          value="<%= typeof locals.post !== 'undefined' ? locals.post.title : '' %>"
+        >
+      </div>
     </div>
-    <div>
-      <label for="text">Message</label>
-      <input
-        type="text"
-        id="text"
-        name="text"
-        placeholder="Message text"
-        required
-        value="<%= typeof locals.post !== 'undefined' ? locals.post.text : '' %>"
-      >
+    <div class="field">
+      <label class="label" for="text">Message</label>
+      <div class="control">
+        <input
+          class="input is-large"
+          type="text"
+          id="text"
+          name="text"
+          placeholder="Message text"
+          required
+          value="<%= typeof locals.post !== 'undefined' ? locals.post.text : '' %>"
+        >
+      </div>
     </div>
     <div>
       <input
