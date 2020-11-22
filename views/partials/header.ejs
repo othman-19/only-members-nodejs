@@ -1,9 +1,0 @@
-<% if (typeof locals.currentUser !== 'undefined') { %>
-  <div>
-    <form action="/logout" method="POST" enctype="application/x-www-form-urlencoded">
-      <input type="hidden" name="_csrf" value="<%= _csrf %>">
-      <input type="hidden" name="_method" value="DELETE">
-      <button type="submit">Log Out</button>
-    </form>
-  </div>
-<% }; %>

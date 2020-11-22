@@ -113,7 +113,7 @@ app.use('/posts', checkAuthenticatedUser, postsRouter);
 
 app.delete('/logout', checkAuthenticatedUser, (req, res) => {
   req.logOut();
-  req.flash('info', 'You logged out');
+  req.flash('info', 'You logged out, see you next time');
   req.session.destroy(() => res.redirect('/'));
 });
 

@@ -6,6 +6,7 @@ const { checkAuthenticatedUser } = require('../config/authentications');
 const { checkNotAuthenticatedUser } = require('../config/authentications');
 const { isNotMember } = require('../config/authorisations');
 const { isNotAdmin } = require('../config/authorisations');
+const { roleValidations } = require('../controllers/roleController');
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get('/login', checkNotAuthenticatedUser, (req, res, next) => {
 router.post('/login', checkNotAuthenticatedUser,
   passport.authenticate('local', {
     successRedirect: '/',
-    successFlash: 'Welcome user',
+    successFlash: 'Welcome!',
     failureRedirect: '/login',
     failureFlash: true,
   }));
@@ -34,7 +35,7 @@ router.post('/register', checkNotAuthenticatedUser, userController.create);
 router.get('/member', checkAuthenticatedUser, isNotAdmin, isNotMember, roleController.newMember);
 router.get('/admin', checkAuthenticatedUser, isNotAdmin, roleController.newAdmin);
 /* Post role form. */
-router.post('/member', checkAuthenticatedUser, isNotAdmin, isNotMember, roleController.createMember);
-router.post('/admin', checkAuthenticatedUser, isNotAdmin, roleController.createAdmin);
+router.post('/member', checkAuthenticatedUser, isNotAdmin, isNotMember, roleValidations, roleController.createMember);
+router.post('/admin', checkAuthenticatedUser, isNotAdmin, roleValidations, roleController.createAdmin);
 
 module.exports = router;

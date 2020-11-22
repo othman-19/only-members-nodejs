@@ -11,7 +11,7 @@
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu">
+  <div class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item" href="/posts">
         Home
@@ -54,6 +54,11 @@
       <div class="navbar-item">
         <div class="buttons">
           <% if (typeof locals.currentUser !== 'undefined') { %>
+            <% if (!currentUser.isMember()) { %>
+              <div class="navbar-item">
+                <a class="button is-primary" href="/member">Become Member</a>
+              </div>
+            <% } %>
             <div>
               <form action="/logout" method="POST" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="_csrf" value="<%= _csrf %>">

@@ -18,7 +18,7 @@ exports.roleValidations = [
 
   check('rolePasswordConfirmation', 'passwordConfirmation field must have the same value as the password field')
     .exists()
-    .custom((value, { req }) => value === req.body.password),
+    .custom((value, { req }) => value === req.body.rolePassword),
 ];
 
 exports.createMember = (req, res, next) => {
