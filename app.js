@@ -16,16 +16,21 @@ const rateLimit = require('express-rate-limit');
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
 
-require('dotenv').config();
+const {
+  secret,
+  environement,
+  database,
+  port,
+} = require('./config/index');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
-mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => {
-    console.log('MongoDB Connected');
-    console.log(`app listening on port ${process.env.PORT}!`);
+    console.log('DataBase Connected');
+    console.log(`app listening on port ${port}!`);
   })
   .catch(err => {
     console.error(err);
@@ -44,13 +49,13 @@ app.use(helmet());
 
 app.set('trust proxy', 1); // trust first proxy
 app.use(session({
-  secret: process.env.SECRET,
+  secret,
   resave: false,
   saveUninitialized: true,
   name: 'sessionId',
   cookie: {
     httpOnly: true,
-    // secure: true,
+    secure: environement === 'production',
   },
 }));
 
@@ -59,7 +64,6 @@ app.use(cors({
   origin(origin, callback) {
     // allow requests with no origin
     // (like mobile apps or curl requests)
-    console.log(origin);
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = 'The CORS policy for this site does not '

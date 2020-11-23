@@ -33,6 +33,7 @@ I will use my authentication skills learned, and also I will be practicing my da
 - Admin has the ability to see all authors and permitted to delete all messages.
 
 ## Security
+- Using NODE_ENV to hide important variables and stack traces in error pages.
 - Protected from Cross site request forgery(csrf) using CSURF npm package.
 - Protected from Cross site scripting(xss) and injection by validating and sanitization the data.
 - Passwords are secured with bcrypt.js.
