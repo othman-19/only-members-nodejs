@@ -14,6 +14,7 @@ const helmet = require('helmet');
 const csrf = require('csurf');
 const rateLimit = require('express-rate-limit');
 const debug = require('debug')('members-only:');
+const compression = require('compression');
 
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
@@ -51,6 +52,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
+app.use(compression());
 
 app.use(helmet());
 
