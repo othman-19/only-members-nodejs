@@ -13,9 +13,10 @@ const cors = require('cors');
 const helmet = require('helmet');
 const csrf = require('csurf');
 const rateLimit = require('express-rate-limit');
+const debug = require('debug');
+
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
-
 const {
   secret,
   environement,
@@ -27,13 +28,19 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
-mongoose.connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => {
-    console.log('DataBase Connected');
-    console.log(`app listening on port ${port}!`);
-  })
+mongoose.connect(
+  database,
+  {
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  },
+).then(() => {
+  console.log('DataBase Connected');
+  console.log(`app listening on port ${port}!`);
+})
   .catch(err => {
-    console.error(err);
+    debug(`update error:  ${err}`);
   });
 
 const app = express();
