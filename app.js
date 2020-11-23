@@ -13,7 +13,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const csrf = require('csurf');
 const rateLimit = require('express-rate-limit');
-const debug = require('debug');
+const debug = require('debug')('members-only:');
 
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
@@ -36,8 +36,8 @@ mongoose.connect(
     useNewUrlParser: true,
   },
 ).then(() => {
-  console.log('DataBase Connected');
-  console.log(`app listening on port ${port}!`);
+  debug('DataBase Connected');
+  debug(`app listening on port ${port}!`);
 })
   .catch(err => {
     debug(`update error:  ${err}`);
