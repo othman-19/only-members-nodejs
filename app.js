@@ -52,7 +52,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
-app.use(compression());
+// app.use(compression());
 
 // app.use(
 //   helmet({
@@ -75,7 +75,7 @@ app.use(compression());
 //   }),
 // );
 app.use((req, res, next) => {
-  res.header('Content-Security-Policy', "font-src 'self' https://fonts.googleapis.com/css", "style-src 'self' https://fonts.googleapis.com/css", "style-src-elem 'self' https://fonts.googleapis.com/css");
+  res.header('Content-Security-Policy', "style-src-elem 'self' https://fonts.googleapis.com/css");
   next();
 });
 
