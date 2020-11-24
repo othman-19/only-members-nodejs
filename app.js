@@ -55,6 +55,22 @@ app.use(flash());
 app.use(compression());
 
 app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      fontSrc: ["'self'", 'https://fonts.googleapis.com'],
+      styleSrc: [
+        "'self'",
+        'https://fonts.googleapis.com',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css',
+        'https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css',
+      ],
+      upgradeInsecureRequests: [],
+    },
+  }),
+);
 
 app.set('trust proxy', 1); // trust first proxy
 app.use(session({
