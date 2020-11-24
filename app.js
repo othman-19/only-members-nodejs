@@ -73,11 +73,11 @@ app.use(compression());
 //   }),
 // );
 
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  }),
-);
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: false,
+//   }),
+// );
 
 app.set('trust proxy', 1); // trust first proxy
 app.use(session({
