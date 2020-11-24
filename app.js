@@ -50,6 +50,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use((req, res, next) => {
+  res.header('Content-Security-Policy', "style-src-elem 'self' https://fonts.googleapis.com/css");
+  res.header('Content-Security-Policy', "style-src 'self' https://fonts.googleapis.com/css");
+  res.header('Content-Security-Policy', "style-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css");
+  res.header('Content-Security-Policy', "style-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css");
+  res.header('Content-Security-Policy', "font-src 'self' https://fonts.googleapis.com/css");
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 // app.use(compression());
@@ -74,10 +82,6 @@ app.use(flash());
 //     contentSecurityPolicy: false,
 //   }),
 // );
-app.use((req, res, next) => {
-  res.header('Content-Security-Policy', "style-src-elem 'self' https://fonts.googleapis.com/css");
-  next();
-});
 
 // app.set('trust proxy', 1); // trust first proxy
 app.use(session({
@@ -87,7 +91,7 @@ app.use(session({
   name: 'sessionId',
   cookie: {
     httpOnly: true,
-    secure: environement === 'production',
+    // secure: environement === 'production',
   },
 }));
 
