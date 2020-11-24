@@ -75,11 +75,11 @@ app.use(compression());
 //   }),
 // );
 app.use((req, res, next) => {
-  res.header('Content-Security-Policy', "font-src 'self' https://fonts.googleapis.com/css");
+  res.header('Content-Security-Policy', "font-src 'self' https://fonts.googleapis.com/css", "style-src 'self' https://fonts.googleapis.com/css", "style-src-elem 'self' https://fonts.googleapis.com/css");
   next();
 });
 
-app.set('trust proxy', 1); // trust first proxy
+// app.set('trust proxy', 1); // trust first proxy
 app.use(session({
   secret,
   resave: false,
@@ -165,7 +165,6 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  console.log(req.app.get('env'));
   if (req.app.get('env') === 'production') {
     res.status(500);
     res.render('500', { title: '500: Internal Server Error', err });
