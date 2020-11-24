@@ -63,7 +63,7 @@ app.use(
         fontSrc: ["'self'", 'https:', 'data:', 'https://fonts.googleapis.com/css'],
         styleSrc: [
           "'self'",
-          'https://fonts.googleapis.com/css',
+          'http://fonts.googleapis.com/css',
           'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css',
           'https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css',
         ],
