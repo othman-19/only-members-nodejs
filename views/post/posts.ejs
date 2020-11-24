@@ -1,0 +1,45 @@
+<div>
+  <%- include('../partials/messages.ejs') %>
+</div>
+<h1 class="title is-2 has-text-centered"><%= title %></h1>
+<div class="mt-6 mb-6">
+  <a class="button is-medium is-link mb3" href="posts/create"> New Message</a>
+</div>
+<div class="content has-text-centered">
+  <% posts.forEach(post => { %>
+    <article class="message">
+      <div class="message-header">
+        <p><%= post.title %></p>
+      </div>
+      <div class="message-body">
+        <p><%= post.text %></p>
+        <% if (post.author) { %>
+          <div>
+            <p>By: <%= post.author.fullName %></p>
+            <p>At:  <%= post.author.createdAt %></p>
+          </div>
+          <div class="is-flex">
+            <% if ((currentUser._id.toString() === post.author._id.toString()) || currentUser.isAdmin()) { %>
+              <div class="mt-2 mb-2 mr-2">
+                <form method="POST" action="<%= post.url %>" enctype="application/x-www-form-urlencoded">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                  <button class="button is-small is-rounded is-danger" type="submit">Delete</button>
+                </form>
+              </div>
+            <% }; %>
+    
+            <% if (currentUser._id.toString() === post.author._id.toString()) { %>
+              <div class="mt-2 mb-2 mr-2">
+                <form action="<%= post.url + '/update' %>">
+                  <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                  <button class="button is-small is-rounded is-primary" type="submit">Edit</button>
+                </form>
+              </div>
+            <% }; %>
+          </div>
+        <% }; %>
+      </div>
+    </article>
+  <% }); %>
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+  <%- include('../partials/messages.ejs') %>
+  
+  <h1 class="title is-2"><%= currentUser.fullName %></h1>
+
+  <div class="field is-grouped is-grouped-multiline">
+    <% if (currentUser.isMember()) { %>
+      <div class="control">
+        <div class="tags has-addons">
+          <span class="tag is-dark">Member</span>
+          <span class="tag is-success">yes</span>
+        </div>
+      </div>  
+    <% } %>
+    <% if (currentUser.isAdmin()) { %>
+      <div class="control">
+        <div class="tags has-addons">
+          <span class="tag is-dark">Admin</span>
+          <span class="tag is-success">yes</span>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="mt-6 mb-6">
+    <a class="button is-medium is-link mb3" href="/posts/create"> New Message</a>
+  </div>
+  <div>
+    <% if (locals.posts.length > 0) { %>
+      <h4 class="title is-4">Your Messages</h4>
+      <div class="content">
+        <% posts.forEach(post => { %>
+          <article class="message">
+            <div class="message-header">
+              <p><%= post.title %></p>
+            </div>
+            <div class="message-body">
+              <p><%= post.text %></p>
+              <div class="is-flex">
+                <div class="mt-2 mb-2 mr-2">
+                  <form method="POST" action="<%= post.url %>" enctype="application/x-www-form-urlencoded">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                    <button class="button is-small is-rounded is-danger" type="submit">Delete</button>
+                  </form>
+                </div>
+                <div class="mt-2 mb-2 mr-2">
+                  <form action="<%= post.url + '/update' %>">
+                    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                    <button class="button is-small is-rounded is-primary" type="submit">Edit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="is-warning">You have no messages!</p>
+    <% } %>
+
+    <div class="is-flex-wrap-wrap">
+      <% if (!currentUser.isMember()) { %>
+        <div class="mt-2 mb-2 mr-2">
+          <a class="button is-primary" href="/member">Register as a member</a>
+        </div>
+      <% } %>
+  
+      <% if (!currentUser.isAdmin()) { %>
+        <div class="mt-2 mb-2 mr-2">
+          <a class="button is-primary" href="/admin">Register as an admin</a>
+        </div>  
+      <% } %>
+      <form action="<%= currentUser.url + '/update' %>">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <button class="button is-primary mt-2 mb-2 mr-2" type="submit">Update Profile</button>
+      </form>
+      <form method="POST" action="<%= currentUser.url %>" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <button class="button is-danger mt-2 mb-2 mr-2" type="submit">Delete Profile</button>
+      </form>
+    </div>
+
+  </div>
+</div>

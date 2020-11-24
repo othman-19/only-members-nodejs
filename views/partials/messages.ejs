@@ -1,0 +1,39 @@
+<% if (messages.error) { %>
+  <div class="notification is-warning mb-3">
+    <button class="delete"></button>
+    <p><%= messages.error %></p>
+  </div>
+<% } %>
+
+<% if (locals.errors) { %>
+  <div class="notification is-warning mb-3">
+    <button class="delete"></button>
+    <ul>
+      <% locals.errors.forEach(function(error){ %>
+        <li> <strong>Warning!</strong> <%= error.msg %> </li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %>
+
+<% if (messages.success) { %>
+  <div class="notification is-success mb-3">
+    <button class="delete"></button>
+    <p><%= messages.success %></p>
+  </div>
+  
+<% } %>
+<% if (messages.info) { %>
+  <div class="notification is-info mb-3">
+    <button class="delete"></button>
+    <p><%= messages.info %></p>
+  </div>
+<% } %>
+<% if (messages.danger) { %>
+  <div class="notification is-danger mb-3">
+    <button class="delete"></button>
+    <p><%= messages.danger %></p>
+  </div>
+<% } %>
+
+
