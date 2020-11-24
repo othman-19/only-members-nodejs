@@ -154,18 +154,27 @@ app.use((req, res, next) => {
   }
 });
 // error handler
-app.use((err, req, res, next) => {
-  if (req.app.get('env') === 'production') {
-    res.status(500);
-    res.render('500', { title: '500: Internal Server Error', err });
-  } else {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = err;
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-  }
+// app.use((error, req, res, next) => {
+//   if (req.app.get('env') === 'production') {
+//     res.status(500);
+//     res.render('error', { title: '500: Internal Server Error', error });
+//   } else {
+//     // set locals, only providing error in development
+//     res.locals.message = error.message;
+//     res.locals.error = error;
+//     // render the error page
+//     res.status(error.status || 500);
+//     res.render('error');
+//   }
+// });
+
+app.use((error, req, res, next) => {
+  // set locals, only providing error in development
+  res.locals.message = error.message;
+  res.locals.error = error;
+  // render the error page
+  res.status(error.status || 500);
+  res.render('error');
 });
 
 // CSRF error handler
