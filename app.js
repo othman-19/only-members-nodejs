@@ -68,7 +68,7 @@ app.use(session({
   },
 }));
 
-const allowedOrigins = ['null', 'http://localhost:3000', 'http://myrapp.com'];
+const allowedOrigins = ['null', 'http://localhost:3000', 'https://members-only-node.herokuapp.com/'];
 app.use(cors({
   origin(origin, callback) {
     // allow requests with no origin
