@@ -74,6 +74,10 @@ app.use(compression());
 //     contentSecurityPolicy: false,
 //   }),
 // );
+app.use((req, res, next) => {
+  res.header('Content-Security-Policy', "font-src 'self' https://fonts.googleapis.com/css");
+  next();
+});
 
 app.set('trust proxy', 1); // trust first proxy
 app.use(session({
