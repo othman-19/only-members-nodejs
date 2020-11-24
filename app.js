@@ -84,14 +84,14 @@ app.use((req, res, next) => {
 
 // app.set('trust proxy', 1); // trust first proxy
 app.use(session({
-  secret,
+  secret: 'secret',
   resave: false,
   saveUninitialized: true,
-  name: 'sessionId',
-  cookie: {
-    httpOnly: true,
-    // secure: environement === 'production',
-  },
+  // name: 'sessionId',
+  // cookie: {
+  //   httpOnly: true,
+  //   // secure: environement === 'production',
+  // },
 }));
 
 const allowedOrigins = ['null', 'http://localhost:3000', 'https://members-only-node.herokuapp.com'];
