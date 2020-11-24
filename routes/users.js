@@ -1,9 +1,25 @@
-var express = require('express');
-var router = express.Router();
+const UserRouter = require('express').Router();
+const userController = require('../controllers/userController');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// GET request for creating a record. NOTE This must come before routes that display user.
+UserRouter.get('/create', userController.new);
 
-module.exports = router;
+// POST request for creating record.
+UserRouter.post('/create', userController.validations, userController.create);
+
+// DELETE request to delete record.
+UserRouter.delete('/:id', userController.delete);
+
+// GET request to update record.
+UserRouter.get('/:id/update', userController.edit);
+
+// POST request to update record.
+UserRouter.post('/:id/update', userController.validations, userController.update);
+
+// GET request for one record.
+UserRouter.get('/:id', userController.show);
+
+// GET request for list of all records.
+UserRouter.get('/', userController.index);
+
+module.exports = UserRouter;
