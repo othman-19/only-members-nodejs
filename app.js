@@ -58,8 +58,7 @@ app.use((req, res, next) => {
   res.header('Content-Security-Policy', "font-src 'self' https://fonts.googleapis.com/css");
   next();
 });
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(flash());
+
 // app.use(compression());
 
 // app.use(
@@ -132,6 +131,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(flash());
+
 // view engine setup
 app.use(layouts);
 app.set('views', path.join(__dirname, 'views'));
@@ -147,6 +148,7 @@ app.use(methodOverride((req, res) => {
   }
 }));
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', checkAuthenticatedUser, usersRouter);
 app.use('/posts', checkAuthenticatedUser, postsRouter);
