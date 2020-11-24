@@ -59,56 +59,36 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(compression());
+app.use(compression());
 
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: {
-//       'default-src': ["'self'"],
-//       'font-src': ["'self'", 'https:', 'data:', 'https://fonts.googleapis.com/css'],
-//       'style-src': [
-//         "'self'",
-//         'http://fonts.googleapis.com/css',
-//         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css',
-//         'https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css',
-//       ],
-//     },
-//   }),
-// );
+app.use(helmet());
 
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: false,
-//   }),
-// );
-
-// app.set('trust proxy', 1); // trust first proxy
 app.use(session({
-  secret: 'secret',
+  secret,
   resave: false,
   saveUninitialized: true,
-  // name: 'sessionId',
-  // cookie: {
-  //   httpOnly: true,
-  //   // secure: environement === 'production',
-  // },
+  name: 'sessionId',
+  cookie: {
+    httpOnly: true,
+    secure: environement === 'production',
+  },
 }));
 
 const allowedOrigins = ['null', 'http://localhost:3000', 'https://members-only-node.herokuapp.com'];
-// app.use(cors({
-//   origin(origin, callback) {
-//     // allow requests with no origin
-//     // (like mobile apps or curl requests)
-//     if (!origin) return callback(null, true);
-//     if (allowedOrigins.indexOf(origin) === -1) {
-//       const msg = 'The CORS policy for this site does not '
-//                 + 'allow access from the specified Origin.';
-//       return callback(new Error(msg), false);
-//     }
-//     return callback(null, true);
-//   },
-//   credentials: true,
-// }));
+app.use(cors({
+  origin(origin, callback) {
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not '
+                + 'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+}));
 
 const csrfProtection = csrf({ cookie: true });
 app.use(csrfProtection);
@@ -164,16 +144,28 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  if (req.app.get('env') === 'production') {
+    res.status(400);
+    res.render('404', { title: '404: File Not Found' });
+  } else {
+    next(createError(404));
+  }
+});
 // error handler
-// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  if (req.app.get('env') === 'production') {
+    res.status(500);
+    res.render('500', { title: '500: Internal Server Error', err });
+  } else {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = err;
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+  }
 });
 
 // CSRF error handler
