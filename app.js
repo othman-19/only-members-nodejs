@@ -60,10 +60,10 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
-        fontSrc: ["'self'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.googleapis.com/css?family=Lato:300,400,700,900'],
         styleSrc: [
           "'self'",
-          'https://fonts.googleapis.com',
+          'https://fonts.googleapis.com/css?family=Lato:300,400,700,900',
           'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css',
           'https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css',
         ],
