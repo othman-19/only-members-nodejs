@@ -54,20 +54,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 app.use(compression());
 
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      'default-src': ["'self'"],
-      'font-src': ["'self'", 'https:', 'data:', 'https://fonts.googleapis.com/css'],
-      'style-src': [
-        "'self'",
-        'http://fonts.googleapis.com/css',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css',
-        'https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css',
-      ],
-    },
-  }),
-);
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: {
+//       'default-src': ["'self'"],
+//       'font-src': ["'self'", 'https:', 'data:', 'https://fonts.googleapis.com/css'],
+//       'style-src': [
+//         "'self'",
+//         'http://fonts.googleapis.com/css',
+//         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css',
+//         'https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css',
+//       ],
+//     },
+//   }),
+// );
 
 // app.use(
 //   helmet({
@@ -161,6 +161,7 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
+  console.log(req.app.get('env'));
   if (req.app.get('env') === 'production') {
     res.status(500);
     res.render('500', { title: '500: Internal Server Error', err });
