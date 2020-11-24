@@ -159,28 +159,19 @@ app.delete('/logout', checkAuthenticatedUser, (req, res) => {
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  if (req.app.get('env') === 'production') {
-    res.status(400);
-    res.render('404', { title: '404: File Not Found' });
-  } else {
-    next(createError(404));
-  }
+  next(createError(404));
 });
 
 // error handler
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  if (req.app.get('env') === 'production') {
-    res.status(500);
-    res.render('500', { title: '500: Internal Server Error', err });
-  } else {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = err;
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-  }
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
 // CSRF error handler
