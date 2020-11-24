@@ -6,7 +6,7 @@ I will use my authentication skills learned, and also I will be practicing my da
 
 ## Live Demo
 
-[Live Demo Link]() .
+[Live Demo Link](https://members-only-node.herokuapp.com/) .
 
 ![Design of the app models](members_only.png)
 
