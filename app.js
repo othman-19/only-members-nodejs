@@ -63,7 +63,7 @@ app.use(compression());
 app.use(helmet());
 
 app.use(session({
-  secret: process.env.SECRET,
+  secret: 'SECRET',
   resave: false,
   saveUninitialized: true,
   name: 'sessionId',
