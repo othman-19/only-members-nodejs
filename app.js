@@ -19,10 +19,10 @@ const compression = require('compression');
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
 const {
-  // environement,
   database,
   port,
   envSecret,
+  secure,
 } = require('./config/index');
 
 const indexRouter = require('./routes/index');
@@ -72,7 +72,7 @@ app.use(session({
   name: 'sessionId',
   cookie: {
     httpOnly: true,
-    secure: true,
+    secure,
   },
 }));
 
