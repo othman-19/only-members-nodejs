@@ -22,6 +22,7 @@ const {
   environement,
   database,
   port,
+  secret,
 } = require('./config/index');
 
 const indexRouter = require('./routes/index');
@@ -63,7 +64,7 @@ app.use(compression());
 app.use(helmet());
 
 app.use(session({
-  secret: 'SECRET',
+  secret,
   resave: false,
   saveUninitialized: true,
   name: 'sessionId',
