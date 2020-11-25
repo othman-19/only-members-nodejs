@@ -19,7 +19,6 @@ const compression = require('compression');
 const initializePassport = require('./config/passport');
 const { checkAuthenticatedUser } = require('./config/authentications');
 const {
-  secret,
   environement,
   database,
   port,
@@ -64,7 +63,7 @@ app.use(compression());
 app.use(helmet());
 
 app.use(session({
-  secret,
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   name: 'sessionId',
