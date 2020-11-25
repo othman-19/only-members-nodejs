@@ -62,7 +62,9 @@ app.use((req, res, next) => {
 app.use(compression());
 
 app.use(helmet());
-debug(typeof secret);
+
+app.set('trust proxy', 1);
+
 app.use(session({
   secret: envSecret,
   resave: false,
