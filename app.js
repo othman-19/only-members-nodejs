@@ -21,7 +21,7 @@ const { checkAuthenticatedUser } = require('./config/authentications');
 const {
   database,
   port,
-  envSecret,
+  secret,
   secure,
 } = require('./config/index');
 
@@ -66,8 +66,8 @@ app.use(helmet());
 app.set('trust proxy', 1);
 
 app.use(session({
-  secret: envSecret,
-  resave: false,
+  secret,
+  resave: true,
   saveUninitialized: true,
   name: 'sessionId',
   cookie: {
