@@ -157,7 +157,7 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
   if (req.app.get('env') === 'production') {
     res.status(500);
-    res.render('error', { title: '500: Internal Server Error', error });
+    res.render('error', { message: '500: Internal Server Error', error });
   } else {
     // set locals, only providing error in development
     res.locals.message = error.message;
