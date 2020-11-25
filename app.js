@@ -70,7 +70,7 @@ app.use(session({
   name: 'sessionId',
   cookie: {
     httpOnly: true,
-    // secure: true,
+    secure: true,
   },
 }));
 
